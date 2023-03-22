@@ -1,3 +1,7 @@
+### DynamicSurroundings-1.7.10-1.0.6.5
+**Fixes**
+* Fix update checker and move urls to this repo
+
 ### DynamicSurroundings-1.7.10-1.0.6.4
 **Fixes**
 * Added defensive code to protect against bad SoundType entries.
