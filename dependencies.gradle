@@ -1,0 +1,5 @@
+dependencies {
+    api 'com.github.GTNewHorizons:waila:1.5.23'
+
+    api files('libs/Calendar-1.7.10-1.0-9-deobf.jar')
+}

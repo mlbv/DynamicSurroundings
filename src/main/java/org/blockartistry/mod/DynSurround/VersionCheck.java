@@ -28,6 +28,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -44,7 +46,7 @@ import net.minecraft.util.StatCollector;
 // Modeled after the BuildCraft version check system.
 public final class VersionCheck implements Runnable {
 
-	private static final String REMOTE_VERSION_FILE = "https://raw.githubusercontent.com/OreCruncher/BetterRain/master/versions.txt";
+	private static final String REMOTE_VERSION_FILE = "https://raw.githubusercontent.com/mist475/DynamicSurroundings/master/versions.txt";
 	private static final int VERSION_CHECK_RETRIES = 3;
 	private static final int VERSION_CHECK_INTERVAL = 10000;
 
@@ -78,19 +80,14 @@ public final class VersionCheck implements Runnable {
 
 		public SoftwareVersion(String versionString) {
 
-			// This can happen when running in debug
-			if (versionString.charAt(0) == '@') {
-				this.major = 0;
-				this.minor = 0;
-				this.revision = 0;
-				this.patch = 0;
-				this.isAlpha = false;
-				this.isBeta = false;
-				return;
+			// Old git tags start with v
+			if (versionString.charAt(0) == 'v') {
+				versionString = versionString.substring(1);
 			}
+            // Dirty builds = git changes since last git tag
+            versionString = StringUtils.remove(versionString,".dirty");
 
-			assert versionString != null;
-			assert versionString.length() > 0;
+            assert versionString.length() > 0;
 
 			this.isAlpha = StringUtils.containsIgnoreCase(versionString, "ALPHA");
 			if (this.isAlpha)
@@ -104,15 +101,22 @@ public final class VersionCheck implements Runnable {
 			final int numComponents = parts.length;
 
 			assert numComponents >= 3;
-
 			this.major = Integer.parseInt(parts[0]);
 			this.minor = Integer.parseInt(parts[1]);
 			this.revision = Integer.parseInt(parts[2]);
 			if (numComponents == 4) {
-				this.patch = Integer.parseInt(parts[3]);
-			} else {
-				this.patch = 0;
+                // Take the first digits from the match as this section can also include some numbers due to old git tags
+                // For instance: 12TEST1-41-g10064b2 is an option
+                Pattern pattern = Pattern.compile("\\d+");
+                Matcher matcher = pattern.matcher(parts[3]);
+                if (matcher.find()) {
+                    String matches = matcher.group(0);
+                    this.patch = Integer.parseInt(matches);
+                    return;
+                }
+
 			}
+            this.patch = 0;
 		}
 
 		@Override
@@ -182,21 +186,9 @@ public final class VersionCheck implements Runnable {
 	private static void versionCheck() {
 		try {
 
-			String location = REMOTE_VERSION_FILE;
-			HttpURLConnection conn = null;
-			while (location != null && !location.isEmpty()) {
-				final URL url = new URL(location);
+            final URL url = new URL(REMOTE_VERSION_FILE);
 
-				if (conn != null) {
-					conn.disconnect();
-				}
-
-				conn = (HttpURLConnection) url.openConnection();
-				conn.setRequestProperty("User-Agent",
-						"Mozilla/5.0 (Windows; U; Windows NT 6.0; ru; rv:1.9.0.11) Gecko/2009060215 Firefox/3.0.11 (.NET CLR 3.5.30729)");
-				conn.connect();
-				location = conn.getHeaderField("Coordinates");
-			}
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			if (conn == null) {
 				throw new NullPointerException();
