@@ -42,17 +42,16 @@ import org.blockartistry.mod.DynSurround.client.sound.SoundEffect.SoundType;
 import org.blockartistry.mod.DynSurround.data.config.BiomeConfig;
 import org.blockartistry.mod.DynSurround.data.config.SoundConfig;
 import org.blockartistry.mod.DynSurround.event.RegistryReloadEvent;
+import org.blockartistry.mod.DynSurround.proxy.Proxy;
 import org.blockartistry.mod.DynSurround.util.Color;
 import org.blockartistry.mod.DynSurround.util.MyUtils;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
-import gnu.trove.map.hash.TIntObjectHashMap;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
 
 public final class BiomeRegistry {
-
-	private static final TIntObjectHashMap<Entry> registry = new TIntObjectHashMap<Entry>();
+    private static final Map<String,Entry> registry = new HashMap<>();
 	private static final Map<String, String> biomeAliases = new HashMap<String, String>();
 
 	public static final BiomeGenBase UNDERGROUND = new FakeBiome(-1, "Underground");
@@ -200,28 +199,31 @@ public final class BiomeRegistry {
 
 			registry.clear();
 
-			final BiomeGenBase[] biomeArray = BiomeGenBase.getBiomeGenArray();
-			for (int i = 0; i < biomeArray.length; i++)
-				if (biomeArray[i] != null) {
-					registry.put(biomeArray[i].biomeID, new Entry(biomeArray[i]));
-				}
-
+            if (Proxy.LOTR) {
+                registerLOTRBiomes();
+            } else {
+                for (BiomeGenBase biomeGenBase : BiomeGenBase.getBiomeGenArray()) {
+                    if (biomeGenBase != null) {
+                        registry.put(biomeGenBase.biomeName, new Entry(biomeGenBase));
+                    }
+                }
+            }
 			// Add our fake biomes
-			registry.put(UNDERGROUND.biomeID, new Entry(UNDERGROUND));
-			registry.put(UNDERWATER.biomeID, new Entry(UNDERWATER));
-			registry.put(UNDEROCEAN.biomeID, new Entry(UNDEROCEAN));
-			registry.put(UNDERDEEPOCEAN.biomeID, new Entry(UNDERDEEPOCEAN));
-			registry.put(UNDERRIVER.biomeID, new Entry(UNDERRIVER));
-			registry.put(OUTERSPACE.biomeID, new Entry(OUTERSPACE));
-			registry.put(CLOUDS.biomeID, new Entry(CLOUDS));
-			registry.put(PLAYER.biomeID, new Entry(PLAYER));
-			registry.put(WTF.biomeID, new Entry(WTF));
+			registry.put(UNDERGROUND.biomeName, new Entry(UNDERGROUND));
+			registry.put(UNDERWATER.biomeName, new Entry(UNDERWATER));
+			registry.put(UNDEROCEAN.biomeName, new Entry(UNDEROCEAN));
+			registry.put(UNDERDEEPOCEAN.biomeName, new Entry(UNDERDEEPOCEAN));
+			registry.put(UNDERRIVER.biomeName, new Entry(UNDERRIVER));
+			registry.put(OUTERSPACE.biomeName, new Entry(OUTERSPACE));
+			registry.put(CLOUDS.biomeName, new Entry(CLOUDS));
+			registry.put(PLAYER.biomeName, new Entry(PLAYER));
+			registry.put(WTF.biomeName, new Entry(WTF));
 
 			processConfig();
 
 			if (ModOptions.enableDebugLogging) {
 				ModLog.info("*** BIOME REGISTRY ***");
-				for (final Entry entry : registry.valueCollection())
+				for (final Entry entry : registry.values())
 					ModLog.info(entry.toString());
 			}
 
@@ -232,17 +234,38 @@ public final class BiomeRegistry {
 		MinecraftForge.EVENT_BUS.post(new RegistryReloadEvent.Biome());
 	}
 
+    private static void registerLOTRBiomes() {
+        try {
+            Class<?> lotrBiome = Class.forName("lotr.common.world.biome.LOTRBiome");
+            Field[] declaredFields = lotrBiome.getDeclaredFields();
+            //ALso gets the vanilla biomes as these are stored as static final fields as well.
+            for (Field field : declaredFields) {
+                if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
+                    field.setAccessible(true);
+                    if (field.get(null) instanceof BiomeGenBase) {
+                        BiomeGenBase biome = (BiomeGenBase) field.get(null);
+                        if (biome != null) {
+                            registry.put(biome.biomeName, new Entry(biome));
+                        }
+                    }
+                }
+            }
+        }
+        catch (ClassNotFoundException| IllegalAccessException ignored) {
+        }
+    }
+
 	private static Entry get(final BiomeGenBase biome) {
 		synchronized (registry) {
-			Entry entry = registry.get(biome == null ? WTF.biomeID : biome.biomeID);
+			Entry entry = registry.get(biome == null ? WTF.biomeName : biome.biomeName);
 			if (entry == null) {
 				ModLog.warn("Biome [%s] was not detected during initial scan! Reloading config...", resolveName(biome));
 				initialize();
-				entry = registry.get(biome.biomeID);
+				entry = registry.get(biome.biomeName);
 				if (entry == null) {
 					ModLog.warn("Still can't find biome [%s]! Explicitly adding at defaults", resolveName(biome));
 					entry = new Entry(biome);
-					registry.put(biome.biomeID, entry);
+					registry.put(biome.biomeName, entry);
 				}
 			}
 			return entry;
@@ -346,7 +369,7 @@ public final class BiomeRegistry {
 
 	private static void process(final BiomeConfig config) {
 		for (final BiomeConfig.Entry entry : config.entries) {
-			for (final Entry biomeEntry : registry.valueCollection()) {
+			for (final Entry biomeEntry : registry.values()) {
 				if (isBiomeMatch(entry, resolveName(biomeEntry.biome))) {
 					if (entry.hasPrecipitation != null)
 						biomeEntry.hasPrecipitation = entry.hasPrecipitation.booleanValue();

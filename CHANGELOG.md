@@ -1,3 +1,11 @@
+### DynamicSurroundings-1.7.10-1.0.7.0
+**Fixes**
+* Fix lotr biomes returning the wrong sounds due to duplicate biome ids
+
+**Changes**
+* BiomeRegistry know uses biome names instead of biome id's as key.
+This is less performant but more compatible as I expect lotr isn't the only mod with duplicate biomes ids from vanilla
+
 ### DynamicSurroundings-1.7.10-1.0.6.5
 **Fixes**
 * Fix update checker and move urls to this repo
@@ -20,7 +28,7 @@
 * Fixed NPE related to fog calculations when having the blindness effect.
 
 **Changes**
-* Pulled in ambient sounds from the 1.10.x+ branches.  Biome sounds for crickets, forest, plains, jungle, river, and wind have been updated. 
+* Pulled in ambient sounds from the 1.10.x+ branches.  Biome sounds for crickets, forest, plains, jungle, river, and wind have been updated.
 
 ### DynamicSurroundings-1.7.10-1.0.6.1
 **What's New**
@@ -41,14 +49,14 @@
 
 **Changes**
 * Use LCG random number generator for block scan coordinates.  Bottom line is that the process of doing the area block scan is faster.
-    
+
 ### DynamicSurroundings-1.7.10-1.0.6.0
 * Removed all that sound engine restart stuff and replaced with patches to the underlying Minecraft sound engine to avoid the situation all together.  Thanks to CreativeMD and his work on getting to the bottom of things!  This should eliminate a variety of reported problems up through and including:
     * Sound Engine restart lag
     * Frequency of the sound engine crashes
     * Various repeating errors in the client log related to sound muting and sounds not being found
-    * Crashes due to sound engine being yanked out from under other mods (such as IC2) 
-* Sometimes a sound instance would not play.  When this occurs something like "Error in class 'LibraryLWJGLOpenAL'" would show in the log.  Put in some additional code to make sure the sound information is flushed down into the sound engine. 
+    * Crashes due to sound engine being yanked out from under other mods (such as IC2)
+* Sometimes a sound instance would not play.  When this occurs something like "Error in class 'LibraryLWJGLOpenAL'" would show in the log.  Put in some additional code to make sure the sound information is flushed down into the sound engine.
 
 ### DynamicSurroundings-1.7.10-1.0.5.12
 **Fixes**

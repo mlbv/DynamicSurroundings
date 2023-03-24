@@ -5,6 +5,7 @@ This fork is 1.7.10 only and is intended to fix a few bugs I encountered while u
 Changes from the last official 1.7.10 version (1.0.6.4):
 - Updated links to this repository
 - Fix version check
+- Fix playing wrong sounds when in lotr biomes
 
 ### License
 The MIT License (MIT)

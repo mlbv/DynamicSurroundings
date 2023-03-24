@@ -24,6 +24,7 @@
 
 package org.blockartistry.mod.DynSurround.proxy;
 
+import cpw.mods.fml.common.Loader;
 import org.blockartistry.mod.DynSurround.VersionCheck;
 import org.blockartistry.mod.DynSurround.client.DamageEffectHandler;
 import org.blockartistry.mod.DynSurround.client.waila.WailaHandler;
@@ -42,6 +43,7 @@ import net.minecraft.command.ServerCommandManager;
 import net.minecraft.server.MinecraftServer;
 
 public class Proxy {
+    public static boolean LOTR = false;
 
 	public void preInit(final FMLPreInitializationEvent event) {
 		// Register early to give the background process a good amount
@@ -57,6 +59,7 @@ public class Proxy {
 	}
 
 	public void postInit(final FMLPostInitializationEvent event) {
+        LOTR = Loader.isModLoaded("lotr");
 		BiomeRegistry.initialize();
 		DimensionRegistry.initialize();
 	}
