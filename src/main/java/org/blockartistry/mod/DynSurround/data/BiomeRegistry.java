@@ -201,11 +201,10 @@ public final class BiomeRegistry {
 
             if (Proxy.LOTR) {
                 registerLOTRBiomes();
-            } else {
-                for (BiomeGenBase biomeGenBase : BiomeGenBase.getBiomeGenArray()) {
-                    if (biomeGenBase != null) {
-                        registry.put(biomeGenBase.biomeName, new Entry(biomeGenBase));
-                    }
+            }
+            for (BiomeGenBase biomeGenBase : BiomeGenBase.getBiomeGenArray()) {
+                if (biomeGenBase != null) {
+                    registry.put(biomeGenBase.biomeName, new Entry(biomeGenBase));
                 }
             }
 			// Add our fake biomes
@@ -238,7 +237,6 @@ public final class BiomeRegistry {
         try {
             Class<?> lotrBiome = Class.forName("lotr.common.world.biome.LOTRBiome");
             Field[] declaredFields = lotrBiome.getDeclaredFields();
-            //ALso gets the vanilla biomes as these are stored as static final fields as well.
             for (Field field : declaredFields) {
                 if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
                     field.setAccessible(true);

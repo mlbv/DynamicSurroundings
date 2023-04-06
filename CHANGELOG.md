@@ -1,3 +1,7 @@
+### DynamicSurroundings-1.7.10-1.0.7.1
+**Fixes**
+* Fix vanilla biome detection
+
 ### DynamicSurroundings-1.7.10-1.0.7.0
 **Fixes**
 * Fix lotr biomes returning the wrong sounds due to duplicate biome ids
