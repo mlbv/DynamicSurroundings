@@ -151,17 +151,7 @@ public final class VersionCheck implements Runnable {
 	private VersionCheck() {
 	}
 
-	private static final String CURSE_PROJECT_NAME = "238891";
-	private static final String MOD_NAME_TEMPLATE = "DynamicSurroundings-1.7.10-[].jar";
-
 	public static void register() {
-
-		if (Loader.isModLoaded("VersionChecker")) {
-			final NBTTagCompound nbt = new NBTTagCompound();
-			nbt.setString("curseProjectName", CURSE_PROJECT_NAME);
-			nbt.setString("curseFilenameParser", MOD_NAME_TEMPLATE);
-			FMLInterModComms.sendRuntimeMessage(Module.MOD_ID, "VersionChecker", "addVersionCheck", nbt);
-		}
 
 		if (ModOptions.enableVersionChecking) {
 			final VersionCheck test = new VersionCheck();
@@ -176,7 +166,7 @@ public final class VersionCheck implements Runnable {
 		if (event.player instanceof EntityPlayer) {
 			if (status == UpdateStatus.OUTDATED) {
 				final String msg = StatCollector.translateToLocalFormatted("msg.NewVersionAvailable.dsurround",
-						Module.MOD_NAME, currentVersion, CURSE_PROJECT_NAME);
+						Module.MOD_NAME, currentVersion);
 				final IChatComponent component = IChatComponent.Serializer.func_150699_a(msg);
 				event.player.addChatMessage(component);
 			}
