@@ -283,10 +283,10 @@ public final class ModOptions {
 	@RestartRequired
 	public static String[] culledSounds = { "^minecraft:liquid.*", "minecraft:mob.sheep.say",
 			"minecraft:mob.chicken.say", "minecraft:mob.cow.say", "minecraft:mob.pig.say" };
-	@Parameter(category = CATEGORY_SOUND, property = CONFIG_BLOCKED_SOUNDS, defaultValue = "dsurround:bison")
+	@Parameter(category = CATEGORY_SOUND, property = CONFIG_BLOCKED_SOUNDS, defaultValue = "dsurround:bison,dsurround:insectbuzz")
 	@Comment("Sounds to block from playing")
 	@Hidden
-	public static String[] blockedSounds = { "dsurround:bison" };
+	public static String[] blockedSounds = { "dsurround:bison", "dsurround:insectbuzz" };
 	@Parameter(category = CATEGORY_SOUND, property = CONFIG_SOUND_VOLUMES, defaultValue = "")
 	@Comment("Individual sound scaling factors")
 	@Hidden
