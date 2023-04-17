@@ -24,24 +24,21 @@
 
 package org.blockartistry.mod.DynSurround;
 
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.StringUtils;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.StatCollector;
 
 // Modeled after the BuildCraft version check system.
 public final class VersionCheck implements Runnable {
@@ -59,6 +56,8 @@ public final class VersionCheck implements Runnable {
 	public static UpdateStatus status = UpdateStatus.UNKNOWN;
 
 	private static final String mcVersion = Loader.instance().getMinecraftModContainer().getVersion();
+
+    public static VersionCheck instance;
 
 	public static class SoftwareVersion implements Comparable<SoftwareVersion> {
 
@@ -154,22 +153,23 @@ public final class VersionCheck implements Runnable {
 	public static void register() {
 
 		if (ModOptions.enableVersionChecking) {
-			final VersionCheck test = new VersionCheck();
-			FMLCommonHandler.instance().bus().register(test);
-			new Thread(test).start();
+			VersionCheck.instance = new VersionCheck();
+            MinecraftForge.EVENT_BUS.register(instance);
+			new Thread(instance).start();
 		}
 	}
 
 	@SubscribeEvent
-	public void playerLogin(final PlayerLoggedInEvent event) {
+	public void playerLogin(final EntityJoinWorldEvent event) {
 
-		if (event.player instanceof EntityPlayer) {
+		if (event.entity instanceof EntityPlayer player) {
 			if (status == UpdateStatus.OUTDATED) {
 				final String msg = StatCollector.translateToLocalFormatted("msg.NewVersionAvailable.dsurround",
 						Module.MOD_NAME, currentVersion);
 				final IChatComponent component = IChatComponent.Serializer.func_150699_a(msg);
-				event.player.addChatMessage(component);
+				player.addChatMessage(component);
 			}
+            MinecraftForge.EVENT_BUS.unregister(VersionCheck.instance);
 		}
 	}
 
