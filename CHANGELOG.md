@@ -1,3 +1,13 @@
+### DynamicSurroundings-1.7.10-1.0.7.2
+**What's New**
+* Basic configuration for lotr blocks:
+  * Footstep sounds fully done
+  * Basic effects, might receive some tweaks in the future
+
+**Fixes**
+* Fix update checker only printing a notification in singleplayer
+* Remove 1.8+ blocks from config, in debug mode these produced an error, and I'm not planning on updating my fork to newer versions
+
 ### DynamicSurroundings-1.7.10-1.0.7.1
 **Fixes**
 * Fix vanilla biome detection
