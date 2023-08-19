@@ -43,7 +43,7 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldType;
 import net.minecraftforge.common.DimensionManager;
 
-public final class DimensionRegistry {
+public final class DimensionRegistry implements Comparable<DimensionRegistry> {
 
 	private static final int SPACE_HEIGHT_OFFSET = 32;
 	private static final boolean CALENDAR_API = Loader.isModLoaded("CalendarAPI");
@@ -92,9 +92,8 @@ public final class DimensionRegistry {
 
         dimensionData.valueCollection()
             .stream()
-            .map(DimensionRegistry::toString)
-            .sorted(String::compareToIgnoreCase)
-            .forEach(ModLog::info)
+            .sorted()
+            .forEach(dimensionRegistry -> ModLog.info(dimensionRegistry.toString()))
         ;
 	}
 
@@ -321,4 +320,9 @@ public final class DimensionRegistry {
 		builder.append(" weather:").append(Boolean.toString(this.hasWeather));
 		return builder.toString();
 	}
+
+    @Override
+    public int compareTo(DimensionRegistry e) {
+        return this.toString().compareToIgnoreCase(e.toString());
+    }
 }

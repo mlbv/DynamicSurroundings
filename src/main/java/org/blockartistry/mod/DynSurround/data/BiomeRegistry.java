@@ -68,7 +68,7 @@ public final class BiomeRegistry {
 	// and should default to something to avoid crap.
 	private static final BiomeGenBase WTF = new FakeBiome(-256, "(FooBar)");
 
-	private static class Entry {
+	private static class Entry implements Comparable<Entry> {
 
 		private static Class<?> bopBiome = null;
 		private static Field bopBiomeFogDensity = null;
@@ -176,7 +176,12 @@ public final class BiomeRegistry {
 			}
 			return builder.toString();
 		}
-	}
+
+        @Override
+        public int compareTo(Entry e) {
+            return this.biome.biomeName.compareToIgnoreCase(e.biome.biomeName);
+        }
+    }
 
 	public static String resolveName(final BiomeGenBase biome) {
 		if (biome == null)
@@ -224,7 +229,7 @@ public final class BiomeRegistry {
                 registry
                     .values()
                     .stream()
-                    .sorted((o1, o2) -> o1.biome.biomeName.compareToIgnoreCase(o2.biome.biomeName))
+                    .sorted()
                     .forEach(entry -> ModLog.info(entry.toString()))
                 ;
 			}

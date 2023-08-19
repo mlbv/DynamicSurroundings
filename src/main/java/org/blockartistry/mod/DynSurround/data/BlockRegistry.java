@@ -53,7 +53,7 @@ public final class BlockRegistry {
 
 	private static final Map<Block, Entry> registry = new IdentityHashMap<Block, Entry>();
 
-	private static final class Entry {
+	private static final class Entry implements Comparable<Entry> {
 		public final Block block;
 		public int chance = 100;
 		public int stepChance = 100;
@@ -95,7 +95,12 @@ public final class BlockRegistry {
 
 			return builder.toString();
 		}
-	}
+
+        @Override
+        public int compareTo(Entry e) {
+            return this.toString().compareToIgnoreCase(e.toString());
+        }
+    }
 
 	public static void initialize() {
 
@@ -107,9 +112,8 @@ public final class BlockRegistry {
             registry
                 .values()
                 .stream()
-                .map(Entry::toString)
-                .sorted(String::compareToIgnoreCase)
-                .forEach(ModLog::info)
+                .sorted()
+                .forEach(entry -> ModLog.info(entry.toString()))
             ;
 		}
 	}
