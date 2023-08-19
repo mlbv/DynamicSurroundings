@@ -24,6 +24,7 @@
 
 package org.blockartistry.mod.DynSurround.client.footsteps.game.system;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -134,8 +135,12 @@ public final class ForgeDictionary {
 
 	public static void dumpOreNames() {
 		ModLog.debug("**** FORGE ORE DICTIONARY NAMES ****");
-		for (final String oreName : OreDictionary.getOreNames())
-			ModLog.debug(oreName);
+
+        Arrays.stream(OreDictionary.getOreNames())
+            .sorted(String::compareToIgnoreCase)
+            .forEach(ModLog::debug)
+        ;
+
 		ModLog.debug("************************************");
 	}
 

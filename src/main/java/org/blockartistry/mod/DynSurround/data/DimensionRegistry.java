@@ -89,8 +89,13 @@ public final class DimensionRegistry {
 		}
 
 		ModLog.info("*** DIMENSION REGISTRY (delay init) ***");
-		for (final DimensionRegistry reg : dimensionData.valueCollection())
-			ModLog.info(reg.toString());
+
+        dimensionData.valueCollection()
+            .stream()
+            .map(DimensionRegistry::toString)
+            .sorted(String::compareToIgnoreCase)
+            .forEach(ModLog::info)
+        ;
 	}
 
 	public static void loading(final World world) {

@@ -76,14 +76,22 @@ public class ProxyClient extends Proxy {
 			Collections.sort(sounds);
 
 			ModLog.info("*** SOUND REGISTRY ***");
-			for (final String sound : sounds)
-				ModLog.info(sound);
+
+            sounds
+                .stream()
+                .sorted(String::compareToIgnoreCase)
+                .forEach(ModLog::info)
+            ;
 
 			ModLog.info("*** REGISTERED BLOCK NAMES ***");
-			final GenerateBlockReport report = new GenerateBlockReport();
-			for (final String entry : report.getBlockNames()) {
-				ModLog.info(entry);
-			}
+
+            new GenerateBlockReport()
+                .getBlockNames()
+                .stream()
+                .sorted(String::compareToIgnoreCase)
+                .forEach(ModLog::info)
+            ;
+
 
 			ForgeDictionary.dumpOreNames();
 		}

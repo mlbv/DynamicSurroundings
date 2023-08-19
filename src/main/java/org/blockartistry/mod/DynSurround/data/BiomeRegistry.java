@@ -24,15 +24,9 @@
 
 package org.blockartistry.mod.DynSurround.data;
 
-import java.io.File;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.regex.Pattern;
-
+import cpw.mods.fml.relauncher.ReflectionHelper;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.MinecraftForge;
 import org.apache.commons.lang3.StringUtils;
 import org.blockartistry.mod.DynSurround.ModLog;
 import org.blockartistry.mod.DynSurround.ModOptions;
@@ -46,13 +40,18 @@ import org.blockartistry.mod.DynSurround.proxy.Proxy;
 import org.blockartistry.mod.DynSurround.util.Color;
 import org.blockartistry.mod.DynSurround.util.MyUtils;
 
-import cpw.mods.fml.relauncher.ReflectionHelper;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.MinecraftForge;
+import java.io.File;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.regex.Pattern;
 
 public final class BiomeRegistry {
     private static final Map<String,Entry> registry = new HashMap<>();
-	private static final Map<String, String> biomeAliases = new HashMap<String, String>();
+	private static final Map<String, String> biomeAliases = new HashMap<>();
 
 	public static final BiomeGenBase UNDERGROUND = new FakeBiome(-1, "Underground");
 	public static final BiomeGenBase PLAYER = new FakeBiome(-2, "Player");
@@ -222,8 +221,12 @@ public final class BiomeRegistry {
 
 			if (ModOptions.enableDebugLogging) {
 				ModLog.info("*** BIOME REGISTRY ***");
-				for (final Entry entry : registry.values())
-					ModLog.info(entry.toString());
+                registry
+                    .values()
+                    .stream()
+                    .sorted((o1, o2) -> o1.biome.biomeName.compareToIgnoreCase(o2.biome.biomeName))
+                    .forEach(entry -> ModLog.info(entry.toString()))
+                ;
 			}
 
 			// Free memory because we no longer need
@@ -240,11 +243,8 @@ public final class BiomeRegistry {
             for (Field field : declaredFields) {
                 if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
                     field.setAccessible(true);
-                    if (field.get(null) instanceof BiomeGenBase) {
-                        BiomeGenBase biome = (BiomeGenBase) field.get(null);
-                        if (biome != null) {
-                            registry.put(biome.biomeName, new Entry(biome));
-                        }
+                    if (field.get(null) instanceof BiomeGenBase biome) {
+                        registry.put(biome.biomeName, new Entry(biome));
                     }
                 }
             }
@@ -308,7 +308,7 @@ public final class BiomeRegistry {
 
 	public static SoundEffect getSpotSound(final BiomeGenBase biome, final String conditions, final Random random) {
 		final Entry e = get(biome);
-		if (e == null || e.spotSounds.isEmpty() || random.nextInt(e.spotSoundChance) != 0)
+		if (e.spotSounds.isEmpty() || random.nextInt(e.spotSoundChance) != 0)
 			return null;
 
 		int totalWeight = 0;

@@ -104,8 +104,13 @@ public final class BlockRegistry {
 
 		if (ModOptions.enableDebugLogging) {
 			ModLog.info("*** BLOCK REGISTRY ***");
-			for (final Entry entry : registry.values())
-				ModLog.info(entry.toString());
+            registry
+                .values()
+                .stream()
+                .map(Entry::toString)
+                .sorted(String::compareToIgnoreCase)
+                .forEach(ModLog::info)
+            ;
 		}
 	}
 
