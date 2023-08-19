@@ -58,10 +58,10 @@ public class PatchEntityRenderer extends Transmorgrifier {
 
 		boolean failed = false;
 
-		final String names1[] = { "func_78484_h", "addRainParticles" };
+		final String[] names1 = { "func_78484_h", "addRainParticles" };
 		final String sigs1 = "()V";
 
-		final String names2[] = { "func_78474_d", "renderRainSnow" };
+		final String[] names2 = { "func_78474_d", "renderRainSnow" };
 		final String sigs2 = "(F)V";
 
 		MethodNode m = findMethod(cn, sigs1, names1);

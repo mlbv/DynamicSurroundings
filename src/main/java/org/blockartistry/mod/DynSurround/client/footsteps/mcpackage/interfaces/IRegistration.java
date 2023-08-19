@@ -30,6 +30,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public interface IRegistration {
 
-	public void register(final String key, final String value);
+	void register(final String key, final String value);
 
 }

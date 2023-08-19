@@ -42,7 +42,7 @@ public class SimultaneousAcoustic implements IAcoustic {
 	protected final List<IAcoustic> acoustics;
 
 	public SimultaneousAcoustic(final Collection<IAcoustic> acoustics) {
-		this.acoustics = new ArrayList<IAcoustic>(acoustics);
+		this.acoustics = new ArrayList<>(acoustics);
 	}
 
 	@Override

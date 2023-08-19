@@ -39,7 +39,7 @@ import net.minecraft.client.renderer.EntityRenderer;
 @SideOnly(Side.CLIENT)
 public final class RenderWeather {
 
-	private static final List<IAtmosRenderer> renderList = new ArrayList<IAtmosRenderer>();
+	private static final List<IAtmosRenderer> renderList = new ArrayList<>();
 
 	public static void register(final IAtmosRenderer renderer) {
 		renderList.add(renderer);

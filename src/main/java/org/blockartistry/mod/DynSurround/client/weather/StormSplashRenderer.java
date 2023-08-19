@@ -53,7 +53,7 @@ import net.minecraft.world.gen.NoiseGeneratorSimplex;
 @SideOnly(Side.CLIENT)
 public class StormSplashRenderer {
 
-	private static final TIntObjectHashMap<StormSplashRenderer> splashRenderers = new TIntObjectHashMap<StormSplashRenderer>();
+	private static final TIntObjectHashMap<StormSplashRenderer> splashRenderers = new TIntObjectHashMap<>();
 	private static final StormSplashRenderer DEFAULT = new StormSplashRenderer();
 
 	static {
@@ -90,11 +90,8 @@ public class StormSplashRenderer {
 			final double y, final double z) {
 		IParticleFactory factory = null;
 
-		if (dust) {
-			factory = null;
-		} else if (block == Blocks.soul_sand) {
-			factory = null;
-		} else if (block == Blocks.netherrack && RANDOM.nextInt(20) == 0) {
+		if (dust || block == Blocks.soul_sand) {
+        } else if (block == Blocks.netherrack && RANDOM.nextInt(20) == 0) {
 			factory = ParticleFactory.lavaSpark;
 		} else if (block.getMaterial() == Material.lava) {
 			factory = ParticleFactory.smoke;

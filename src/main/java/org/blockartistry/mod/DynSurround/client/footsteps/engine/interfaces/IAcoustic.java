@@ -37,6 +37,6 @@ public interface IAcoustic {
 	/**
 	 * Plays a sound.
 	 */
-	public void playSound(ISoundPlayer player, Object location, EventType event, IOptions inputOptions);
+    void playSound(ISoundPlayer player, Object location, EventType event, IOptions inputOptions);
 
 }

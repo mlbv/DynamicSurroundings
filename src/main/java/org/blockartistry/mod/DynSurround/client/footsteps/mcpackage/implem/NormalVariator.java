@@ -88,7 +88,7 @@ public class NormalVariator implements IVariator {
 	@Override
 	public void loadConfig(final ConfigProperty config) {
 		final Set<String> keysFromConfig = config.getAllProperties().keySet();
-		final Set<String> keys = new HashSet<String>();
+		final Set<String> keys = new HashSet<>();
 		for (final String key : keysFromConfig) {
 			keys.add(key.toUpperCase());
 		}

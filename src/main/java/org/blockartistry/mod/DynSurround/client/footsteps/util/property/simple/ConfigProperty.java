@@ -38,7 +38,7 @@ public class ConfigProperty {
 	private Map<String, String> properties;
 
 	public ConfigProperty() {
-		this.properties = new HashMap<String, String>();
+		this.properties = new HashMap<>();
 	}
 
 	public String getString(final String name) {

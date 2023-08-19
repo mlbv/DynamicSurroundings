@@ -72,7 +72,6 @@ public class PotionHUD extends Gui implements IGuiOverlay {
 		final int guiLeft = 2;
 		int guiTop = 2;
 
-		@SuppressWarnings("unchecked")
 		final Collection<PotionEffect> collection = player.getActivePotionEffects();
 
 		if (!collection.isEmpty()) {
@@ -106,25 +105,24 @@ public class PotionHUD extends Gui implements IGuiOverlay {
 
 				if (potion.hasStatusIcon()) {
 					final int l = potion.getStatusIconIndex();
-					drawTexturedModalRect(guiLeft + 6, guiTop + 7, 0 + l % 8 * 18, 198 + l / 8 * 18, 18, 18);
+					drawTexturedModalRect(guiLeft + 6, guiTop + 7, l % 8 * 18, 198 + l / 8 * 18, 18, 18);
 				}
 
 				try {
 					potion.renderInventoryEffect(guiLeft, guiTop, potioneffect, mc);
-				} catch (final Exception ex) {
-					;
+				} catch (final Exception ignored) {
 				}
 
 				if (!potion.shouldRenderInvText(potioneffect))
 					continue;
-				String s1 = I18n.format(potion.getName(), new Object[0]);
+				String s1 = I18n.format(potion.getName());
 
 				if (potioneffect.getAmplifier() == 1) {
-					s1 = s1 + " " + I18n.format("enchantment.level.2", new Object[0]);
+					s1 = s1 + " " + I18n.format("enchantment.level.2");
 				} else if (potioneffect.getAmplifier() == 2) {
-					s1 = s1 + " " + I18n.format("enchantment.level.3", new Object[0]);
+					s1 = s1 + " " + I18n.format("enchantment.level.3");
 				} else if (potioneffect.getAmplifier() == 3) {
-					s1 = s1 + " " + I18n.format("enchantment.level.4", new Object[0]);
+					s1 = s1 + " " + I18n.format("enchantment.level.4");
 				}
 
 				font.drawStringWithShadow(s1, guiLeft + 10 + 18, guiTop + 6, TEXT_POTION_NAME);

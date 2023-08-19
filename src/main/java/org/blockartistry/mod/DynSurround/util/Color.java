@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.util.Vec3;
 
 /**
- * Holds an RGB triple. See: http://www.rapidtables.com/web/color/RGB_Color.htm
+ * Holds an RGB triple. See: <a href="http://www.rapidtables.com/web/color/RGB_Color.htm">...</a>
  */
 public class Color {
 
@@ -260,10 +260,9 @@ public class Color {
 
 	@Override
 	public boolean equals(final Object anObject) {
-		if (anObject == null || !(anObject instanceof Color))
+		if (!(anObject instanceof Color color))
 			return false;
-		final Color color = (Color) anObject;
-		return this.red == color.red && this.green == color.green && this.blue == color.blue;
+        return this.red == color.red && this.green == color.green && this.blue == color.blue;
 	}
 
 	@Nonnull
@@ -274,11 +273,9 @@ public class Color {
 	@Override
 	@Nonnull
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("[r:").append((int) (this.red * 255));
-		builder.append(",g:").append((int) (this.green * 255));
-		builder.append(",b:").append((int) (this.blue * 255));
-		builder.append(']');
-		return builder.toString();
+        return "[r:" + (int) (this.red * 255) +
+            ",g:" + (int) (this.green * 255) +
+            ",b:" + (int) (this.blue * 255) +
+            ']';
 	}
 }

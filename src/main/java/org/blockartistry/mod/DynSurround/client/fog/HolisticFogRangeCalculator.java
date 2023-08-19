@@ -39,7 +39,7 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 @SideOnly(Side.CLIENT)
 public class HolisticFogRangeCalculator implements IFogRangeCalculator {
 
-	protected final List<IFogRangeCalculator> calculators = new ArrayList<IFogRangeCalculator>();
+	protected final List<IFogRangeCalculator> calculators = new ArrayList<>();
 	protected final FogResult cached = new FogResult();
 
 	public HolisticFogRangeCalculator() {

@@ -31,10 +31,10 @@ public interface INBTSerialization {
 	/**
 	 * Used to deserialize data from an NBT structure
 	 */
-	public void readFromNBT(final NBTTagCompound nbt);
+    void readFromNBT(final NBTTagCompound nbt);
 
 	/**
 	 * Used to serialize data into an NBT structure;
 	 */
-	public void writeToNBT(final NBTTagCompound nbt);
+    void writeToNBT(final NBTTagCompound nbt);
 }

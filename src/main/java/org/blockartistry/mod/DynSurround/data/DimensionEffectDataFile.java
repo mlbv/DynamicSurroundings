@@ -39,9 +39,9 @@ public final class DimensionEffectDataFile extends WorldSavedData {
 
 	private final class NBT {
 		public final static String ENTRIES = "e";
-	};
+	}
 
-	private final TIntObjectHashMap<DimensionEffectData> dataList = new TIntObjectHashMap<DimensionEffectData>();
+	private final TIntObjectHashMap<DimensionEffectData> dataList = new TIntObjectHashMap<>();
 
 	public DimensionEffectDataFile() {
 		this(IDENTIFIER);

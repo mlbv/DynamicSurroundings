@@ -24,19 +24,8 @@
 
 package org.blockartistry.mod.DynSurround.client.gui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map.Entry;
-
-import org.blockartistry.mod.DynSurround.ModOptions;
-import org.blockartistry.mod.DynSurround.Module;
-import org.blockartistry.mod.DynSurround.data.SoundRegistry;
-import org.blockartistry.mod.DynSurround.util.ConfigProcessor;
-
 import cpw.mods.fml.client.config.GuiConfig;
 import cpw.mods.fml.client.config.GuiConfigEntries.NumberSliderEntry;
-import cpw.mods.fml.client.config.IConfigElement;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -48,23 +37,29 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import org.blockartistry.mod.DynSurround.ModOptions;
+import org.blockartistry.mod.DynSurround.Module;
+import org.blockartistry.mod.DynSurround.data.SoundRegistry;
+import org.blockartistry.mod.DynSurround.util.ConfigProcessor;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map.Entry;
 
 @SideOnly(Side.CLIENT)
 public class DynSurroundConfigGui extends GuiConfig {
 
 	private final Configuration config = Module.config();
 
-	@SuppressWarnings("rawtypes")
-	private final ConfigElement soundElement;
+	private final ConfigElement<?> soundElement;
 	private final ConfigCategory soundCategory;
 
-	@SuppressWarnings("rawtypes")
-	private final ConfigElement soundVolumeElement;
+	private final ConfigElement<?> soundVolumeElement;
 	private final ConfigCategory soundVolumeCategory;
 
-	@SuppressWarnings("rawtypes")
 	public DynSurroundConfigGui(final GuiScreen parentScreen) {
-		super(parentScreen, new ArrayList<IConfigElement>(), Module.MOD_ID, false, false, Module.MOD_NAME);
+		super(parentScreen, new ArrayList<>(), Module.MOD_ID, false, false, Module.MOD_NAME);
 		this.titleLine2 = this.config.getConfigFile().getAbsolutePath();
 
 		this.configElements.add(getPropertyConfigElement(ModOptions.CATEGORY_AURORA, ModOptions.CONFIG_AURORA_ENABLED,
@@ -92,13 +87,13 @@ public class DynSurroundConfigGui extends GuiConfig {
 
 		this.soundCategory = new ConfigCategory("Blocked Sounds");
 		this.soundCategory.setComment("Sounds that will be blocked from playing");
-		this.soundElement = new MyConfigElement(this.soundCategory);
+		this.soundElement = new MyConfigElement<>(this.soundCategory);
 		generateSoundList(this.soundCategory);
 		this.configElements.add(this.soundElement);
 
 		this.soundVolumeCategory = new ConfigCategory("Sound Volumes");
 		this.soundVolumeCategory.setComment("Individual sound volume control");
-		this.soundVolumeElement = new MyConfigElement(this.soundVolumeCategory);
+		this.soundVolumeElement = new MyConfigElement<>(this.soundVolumeCategory);
 		generateSoundVolumeList(this.soundVolumeCategory);
 		this.configElements.add(this.soundVolumeElement);
 
@@ -113,16 +108,14 @@ public class DynSurroundConfigGui extends GuiConfig {
 		this.configElements.add(getCategoryConfigElement(ModOptions.CATEGORY_LOGGING_CONTROL, "Logging Options"));
 	}
 
-	@SuppressWarnings("rawtypes")
-	private ConfigElement getCategoryConfigElement(final String category, final String label) {
+	private ConfigElement<?> getCategoryConfigElement(final String category, final String label) {
 		final ConfigCategory cat = this.config.getCategory(category);
-		return new MyConfigElement(cat, label);
+		return new MyConfigElement<>(cat, label);
 	}
 
-	@SuppressWarnings("rawtypes")
-	private ConfigElement getPropertyConfigElement(final String category, final String property, final String label) {
+	private ConfigElement<?> getPropertyConfigElement(final String category, final String property, final String label) {
 		final Property prop = this.config.getCategory(category).get(property);
-		return new MyConfigElement(prop, label);
+		return new MyConfigElement<>(prop, label);
 	}
 
 	@Override
@@ -141,31 +134,31 @@ public class DynSurroundConfigGui extends GuiConfig {
 	}
 
 	protected void saveSoundList() {
-		final List<String> sounds = new ArrayList<String>();
+		final List<String> sounds = new ArrayList<>();
 		for (final Entry<String, Property> entry : this.soundCategory.entrySet()) {
 			if (entry.getValue().getBoolean())
 				sounds.add(entry.getKey());
 		}
 
-		final String[] results = sounds.toArray(new String[sounds.size()]);
+		final String[] results = sounds.toArray(new String[0]);
 		this.config.getCategory(ModOptions.CATEGORY_SOUND).get(ModOptions.CONFIG_BLOCKED_SOUNDS).set(results);
 	}
 
 	protected void saveSoundVolumeList() {
-		final List<String> sounds = new ArrayList<String>();
+		final List<String> sounds = new ArrayList<>();
 		for (final Entry<String, Property> entry : this.soundVolumeCategory.entrySet()) {
 			final int value = entry.getValue().getInt();
 			if (value != 100)
 				sounds.add(entry.getKey() + "=" + value);
 		}
 
-		final String[] results = sounds.toArray(new String[sounds.size()]);
+		final String[] results = sounds.toArray(new String[0]);
 		this.config.getCategory(ModOptions.CATEGORY_SOUND).get(ModOptions.CONFIG_SOUND_VOLUMES).set(results);
 	}
 
 	protected void generateSoundList(final ConfigCategory cat) {
 		final SoundHandler handler = Minecraft.getMinecraft().getSoundHandler();
-		final List<String> sounds = new ArrayList<String>();
+		final List<String> sounds = new ArrayList<>();
 		for (final Object resource : handler.sndRegistry.getKeys())
 			sounds.add(resource.toString());
 		Collections.sort(sounds);
@@ -182,7 +175,7 @@ public class DynSurroundConfigGui extends GuiConfig {
 
 	protected void generateSoundVolumeList(final ConfigCategory cat) {
 		final SoundHandler handler = Minecraft.getMinecraft().getSoundHandler();
-		final List<String> sounds = new ArrayList<String>();
+		final List<String> sounds = new ArrayList<>();
 		for (final Object resource : handler.sndRegistry.getKeys())
 			sounds.add(resource.toString());
 		Collections.sort(sounds);

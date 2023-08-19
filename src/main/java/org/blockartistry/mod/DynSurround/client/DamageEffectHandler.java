@@ -113,15 +113,13 @@ public final class DamageEffectHandler {
 		boolean isCrit = false;
 		if (event.source instanceof EntityDamageSourceIndirect) {
 			final EntityDamageSourceIndirect dmgSource = (EntityDamageSourceIndirect) event.source;
-			if (dmgSource.getSourceOfDamage() instanceof EntityArrow) {
-				final EntityArrow arrow = (EntityArrow) dmgSource.getSourceOfDamage();
-				isCrit = arrow.getIsCritical();
+			if (dmgSource.getSourceOfDamage() instanceof EntityArrow arrow) {
+                isCrit = arrow.getIsCritical();
 			}
 		} else if (event.source instanceof EntityDamageSource) {
 			final EntityDamageSource dmgSource = (EntityDamageSource) event.source;
-			if (dmgSource.getSourceOfDamage() instanceof EntityPlayer) {
-				final EntityPlayer player = (EntityPlayer) dmgSource.getSourceOfDamage();
-				isCrit = isCritical(player, event.entityLiving);
+			if (dmgSource.getSourceOfDamage() instanceof EntityPlayer player) {
+                isCrit = isCritical(player, event.entityLiving);
 			}
 		}
 

@@ -68,8 +68,7 @@ public class PFReaderQP extends PFReaderH {
 
 	@Override
 	protected float reevaluateDistance(final EventType event, final float distance) {
-		final float ret = distance;
-		if (event == EventType.WALK) {
+        if (event == EventType.WALK) {
 			if (this.USE_FUNCTION == 2) {
 				final float overallMultiplier = 1.85f / 2;
 				final float ndm = 0.2f;
@@ -82,37 +81,37 @@ public class PFReaderQP extends PFReaderH {
 				pond *= pond;
 				pond *= ndm;
 				if (this.hoof == 1 || this.hoof == 3) {
-					return ret * pond * overallMultiplier;
+					return distance * pond * overallMultiplier;
 				}
-				return ret * (1 - pond) * overallMultiplier;
+				return distance * (1 - pond) * overallMultiplier;
 			} else if (this.USE_FUNCTION == 1) {
 				final float overallMultiplier = 1.4f;
 				final float ndm = 0.5f;
 
 				if (this.hoof == 1 || this.hoof == 3) {
-					return ret * (ndm + this.nextWalkDistanceMultiplier * ndm * 0.5f) * overallMultiplier;
+					return distance * (ndm + this.nextWalkDistanceMultiplier * ndm * 0.5f) * overallMultiplier;
 				}
-				return ret * (1 - ndm) * overallMultiplier;
+				return distance * (1 - ndm) * overallMultiplier;
 			} else if (this.USE_FUNCTION == 0) {
 				final float overallMultiplier = 1.5f;
 				final float ndm = 0.425f + this.nextWalkDistanceMultiplier * 0.15f;
 
 				if (this.hoof == 1 || this.hoof == 3) {
-					return ret * ndm * overallMultiplier;
+					return distance * ndm * overallMultiplier;
 				}
-				return ret * (1 - ndm) * overallMultiplier;
+				return distance * (1 - ndm) * overallMultiplier;
 			}
 		}
 
 		if (event == EventType.RUN && this.hoof == 0) {
-			return ret * 0.8f;
+			return distance * 0.8f;
 		}
 
 		if (event == EventType.RUN) {
-			return ret * 0.3f;
+			return distance * 0.3f;
 		}
 
-		return ret;
+		return distance;
 	}
 
 }

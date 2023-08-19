@@ -42,7 +42,7 @@ public class BlockPos {
 	private static final int NUM_X_BITS = 1 + MathHelper.calculateLogBaseTwo(MathHelper.roundUpToPowerOfTwo(30000000));
 	private static final int NUM_Z_BITS = NUM_X_BITS;
 	private static final int NUM_Y_BITS = 64 - NUM_X_BITS - NUM_Z_BITS;
-	private static final int Y_SHIFT = 0 + NUM_Z_BITS;
+	private static final int Y_SHIFT = NUM_Z_BITS;
 	private static final int X_SHIFT = Y_SHIFT + NUM_Y_BITS;
 	private static final long X_MASK = (1L << NUM_X_BITS) - 1L;
 	private static final long Y_MASK = (1L << NUM_Y_BITS) - 1L;
@@ -226,10 +226,10 @@ public class BlockPos {
 				Math.min(from.getZ(), to.getZ()));
 		final BlockPos blockpos1 = new BlockPos(Math.max(from.getX(), to.getX()), Math.max(from.getY(), to.getY()),
 				Math.max(from.getZ(), to.getZ()));
-		return new Iterable<BlockPos>() {
-			@Override
-			public Iterator<BlockPos> iterator() {
-				return new AbstractIterator<BlockPos>() {
+		return new Iterable<>() {
+            @Override
+            public Iterator<BlockPos> iterator() {
+                return new AbstractIterator<>() {
 					private BlockPos lastReturned = null;
 
 					@Override
@@ -269,10 +269,10 @@ public class BlockPos {
 				Math.min(from.getZ(), to.getZ()));
 		final BlockPos blockpos1 = new BlockPos(Math.max(from.getX(), to.getX()), Math.max(from.getY(), to.getY()),
 				Math.max(from.getZ(), to.getZ()));
-		return new Iterable<BlockPos.MutableBlockPos>() {
+		return new Iterable<>() {
 			@Override
 			public Iterator<BlockPos.MutableBlockPos> iterator() {
-				return new AbstractIterator<BlockPos.MutableBlockPos>() {
+				return new AbstractIterator<>() {
 					private BlockPos.MutableBlockPos theBlockPos = null;
 
 					@Override

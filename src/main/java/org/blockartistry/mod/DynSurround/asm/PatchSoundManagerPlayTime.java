@@ -42,7 +42,7 @@ public class PatchSoundManagerPlayTime extends Transmorgrifier {
 
 	@Override
 	public boolean transmorgrify(final ClassNode cn) {
-		final String names[] = { "playSound", "func_148611_c" };
+		final String[] names = { "playSound", "func_148611_c" };
 		final String sig = "(Lnet/minecraft/client/audio/ISound;)V";
 
 		final MethodNode m = findMethod(cn, sig, names);
@@ -51,9 +51,8 @@ public class PatchSoundManagerPlayTime extends Transmorgrifier {
 
 			for (int i = 0; i < m.instructions.size(); i++) {
 				final AbstractInsnNode node = m.instructions.get(i);
-				if (node instanceof IntInsnNode) {
-					final IntInsnNode intNode = (IntInsnNode) node;
-					if (intNode.operand == 20) {
+				if (node instanceof IntInsnNode intNode) {
+                    if (intNode.operand == 20) {
 						m.instructions.set(node, new IntInsnNode(Opcodes.BIPUSH, 0));
 						return true;
 					}

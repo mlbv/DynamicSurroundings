@@ -29,7 +29,7 @@ import net.minecraft.world.World;
 
 public final class DiurnalUtils {
 
-	public static enum DayCycle {
+	public enum DayCycle {
 		NO_SKY, SUNRISE, SUNSET, DAYTIME, NIGHTTIME
 	}
 

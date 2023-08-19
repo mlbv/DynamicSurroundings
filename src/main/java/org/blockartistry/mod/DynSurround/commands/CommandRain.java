@@ -50,8 +50,8 @@ public final class CommandRain extends CommandBase {
 		final StringBuilder builder = new StringBuilder();
 		final float minutes = (world.getWorldInfo().getRainTime() / 20.0F) / 60.0F;
 		builder.append(data.toString());
-		builder.append("; isRaining: ").append(Boolean.toString(world.isRaining()));
-		builder.append("; isSurface: ").append(Boolean.toString(world.provider.isSurfaceWorld()));
+		builder.append("; isRaining: ").append(world.isRaining());
+		builder.append("; isSurface: ").append(world.provider.isSurfaceWorld());
 		builder.append("; strength: ").append(FORMATTER.format(world.getRainStrength(1.0F) * 100));
 		builder.append("; timer: ").append(FORMATTER.format(minutes)).append(" minutes");
 		return builder.toString();

@@ -40,14 +40,14 @@ public interface IBlockMap extends IRegistration {
 	 * block is a non-emitting block, meaning block resolution must continue on its
 	 * neighbours.
 	 */
-	public String getBlockMap(final Block block, final int meta);
+    String getBlockMap(final Block block, final int meta);
 
 	/**
 	 * This will return null if the substrate does not resolve in the selected
 	 * carpet.
 	 */
-	public String getBlockMapSubstrate(final Block block, final int meta, final Substrate substrate);
+    String getBlockMapSubstrate(final Block block, final int meta, final Substrate substrate);
 
-	public void collectData(final Block block, final int meta, final List<String> data);
+	void collectData(final Block block, final int meta, final List<String> data);
 
 }

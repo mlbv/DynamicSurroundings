@@ -37,7 +37,7 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 @SideOnly(Side.CLIENT)
 public class HolisticFogColorCalculator implements IFogColorCalculator {
 
-	protected List<IFogColorCalculator> calculators = new ArrayList<IFogColorCalculator>();
+	protected List<IFogColorCalculator> calculators = new ArrayList<>();
 	protected Color cached;
 
 	public HolisticFogColorCalculator() {
@@ -55,8 +55,7 @@ public class HolisticFogColorCalculator implements IFogColorCalculator {
 			final Color color = calc.calculate(event);
 			if (result == null)
 				result = color;
-			else if (color != null)
-				result = result.mix(color);
+			else result = result.mix(color);
 		}
 		return this.cached = result;
 	}

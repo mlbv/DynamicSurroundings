@@ -47,7 +47,7 @@ public final class SoundCache {
 	private static final int BUFFER_SIZE = 64 * 1024;
 	private static final byte[] BUFFER = new byte[BUFFER_SIZE];
 	private static final IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
-	private static final Map<ResourceLocation, URL> cache = new HashMap<ResourceLocation, URL>(256);
+	private static final Map<ResourceLocation, URL> cache = new HashMap<>(256);
 
 	private static final byte[] SILENCE = getBuffer(new ResourceLocation("dsurround:sounds/ambient/silence.ogg"));
 
@@ -79,8 +79,7 @@ public final class SoundCache {
 			if (stream != null)
 				try {
 					stream.close();
-				} catch (final Throwable t) {
-					;
+				} catch (final Throwable ignored) {
 				}
 		}
 
@@ -98,7 +97,7 @@ public final class SoundCache {
 			handler = new MemoryStreamHandler(key, buffer);
 		}
 
-		return new URL((URL) null, handler.getSpec(), handler);
+		return new URL(null, handler.getSpec(), handler);
 	}
 
 	private SoundCache() {

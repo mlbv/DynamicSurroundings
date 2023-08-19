@@ -48,7 +48,7 @@ public class PatchSoundManager extends Transmorgrifier {
 
 	@Override
 	public boolean transmorgrify(final ClassNode cn) {
-		final String names[] = { "getURLForSoundResource", "func_148612_a" };
+		final String[] names = { "getURLForSoundResource", "func_148612_a" };
 		final String sig = "(Lnet/minecraft/util/ResourceLocation;)Ljava/net/URL;";
 
 		final MethodNode m = findMethod(cn, sig, names);

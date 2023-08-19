@@ -34,11 +34,11 @@ public interface ISoundPlayer {
 	/**
 	 * Plays a sound.
 	 */
-	public void playSound(final Object location, final String soundName, final float volume, final float pitch,
+    void playSound(final Object location, final String soundName, final float volume, final float pitch,
 			final IOptions options);
 
 	/**
 	 * Returns a RANDOM number generator.
 	 */
-	public Random getRNG();
+    Random getRNG();
 }

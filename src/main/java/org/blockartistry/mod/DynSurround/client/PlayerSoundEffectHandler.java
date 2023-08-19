@@ -57,7 +57,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 @SideOnly(Side.CLIENT)
 public class PlayerSoundEffectHandler implements IClientEffectHandler {
 
-	private static final List<EntityDropParticleFX> drops = new ArrayList<EntityDropParticleFX>();
+	private static final List<EntityDropParticleFX> drops = new ArrayList<>();
 
 	private static boolean doBiomeSounds() {
 		return EnvironState.isPlayerUnderground() || !EnvironState.isPlayerInside();
@@ -66,7 +66,7 @@ public class PlayerSoundEffectHandler implements IClientEffectHandler {
 	private static List<SoundEffect> getBiomeSounds(final String conditions) {
 		// Need to collect sounds from all the applicable biomes
 		// along with their weights.
-		final TObjectIntHashMap<SoundEffect> sounds = new TObjectIntHashMap<SoundEffect>();
+		final TObjectIntHashMap<SoundEffect> sounds = new TObjectIntHashMap<>();
 		final TObjectIntHashMap<BiomeGenBase> weights = BiomeSurveyHandler.getBiomes();
 		for (final BiomeGenBase biome : weights.keySet()) {
 			final List<SoundEffect> bs = BiomeRegistry.getSounds(biome, conditions);
@@ -75,7 +75,7 @@ public class PlayerSoundEffectHandler implements IClientEffectHandler {
 		}
 
 		// Scale the volumes in the resulting list based on the weights
-		final List<SoundEffect> result = new ArrayList<SoundEffect>();
+		final List<SoundEffect> result = new ArrayList<>();
 		final int area = BiomeSurveyHandler.getArea();
 		for (final SoundEffect sound : sounds.keySet()) {
 			final float scale = 0.3F + 0.7F * ((float) sounds.get(sound) / (float) area);
@@ -102,7 +102,7 @@ public class PlayerSoundEffectHandler implements IClientEffectHandler {
 		final BiomeGenBase playerBiome = EnvironState.getPlayerBiome();
 		final String conditions = EnvironState.getConditions();
 
-		final List<SoundEffect> sounds = new ArrayList<SoundEffect>();
+		final List<SoundEffect> sounds = new ArrayList<>();
 		if (doBiomeSounds())
 			sounds.addAll(getBiomeSounds(conditions));
 		sounds.addAll(BiomeRegistry.getSounds(BiomeRegistry.PLAYER, conditions));
@@ -148,13 +148,10 @@ public class PlayerSoundEffectHandler implements IClientEffectHandler {
 
 	@SubscribeEvent
 	public void diagnostics(final DiagnosticEvent.Gather event) {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("SoundSystem: ").append(SoundManager.currentSoundCount()).append('/')
-				.append(SoundManager.maxSoundCount());
-		event.output.add(builder.toString());
-		for (final String sound : SoundManager.getSounds()) {
-			event.output.add(sound);
-		}
+        String builder = "SoundSystem: " + SoundManager.currentSoundCount() + '/' +
+            SoundManager.maxSoundCount();
+		event.output.add(builder);
+        event.output.addAll(SoundManager.getSounds());
 	}
 
 	@SubscribeEvent

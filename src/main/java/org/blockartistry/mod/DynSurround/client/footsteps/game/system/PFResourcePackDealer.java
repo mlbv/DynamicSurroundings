@@ -85,9 +85,8 @@ public class PFResourcePackDealer {
 			return true;
 		}
 
-		@SuppressWarnings("rawtypes")
 		@Override
-		public Set getResourceDomains() {
+		public Set<String> getResourceDomains() {
 			return null;
 		}
 
@@ -111,11 +110,10 @@ public class PFResourcePackDealer {
 	}
 
 	public List<IResourcePack> findResourcePacks() {
-		@SuppressWarnings("unchecked")
 		final List<ResourcePackRepository.Entry> repo = Minecraft.getMinecraft().getResourcePackRepository()
 				.getRepositoryEntries();
 
-		final List<IResourcePack> foundEntries = new ArrayList<IResourcePack>();
+		final List<IResourcePack> foundEntries = new ArrayList<>();
 		foundEntries.add(new DefaultPack());
 
 		// Tack on loaded mods

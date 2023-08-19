@@ -42,7 +42,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public abstract class AcousticsLibrary implements ILibrary {
-	private final Map<String, IAcoustic> acoustics = new LinkedHashMap<String, IAcoustic>();
+	private final Map<String, IAcoustic> acoustics = new LinkedHashMap<>();
 
 	public AcousticsLibrary() {
 	}
@@ -65,7 +65,7 @@ public abstract class AcousticsLibrary implements ILibrary {
 			return;
 		}
 
-		final String fragments[] = acousticName.split(",");
+		final String[] fragments = acousticName.split(",");
 		for (final String fragment : fragments) {
 			final IAcoustic acoustic = this.acoustics.get(fragment);
 			if (acoustic == null) {

@@ -152,7 +152,7 @@ public class AcousticsJsonReader {
 		}
 
 		if (ret == null)
-			throw new JsonParseException("Unresolved Json element: \r\n" + unsolved.toString());
+			throw new JsonParseException("Unresolved Json element: \r\n" + unsolved);
 		return ret;
 	}
 
@@ -166,52 +166,50 @@ public class AcousticsJsonReader {
 			ret = a;
 		} else {
 			final String type = unsolved.get("type").getAsString();
-			if (type.equals("simultaneous")) {
-				final List<IAcoustic> acoustics = new ArrayList<IAcoustic>();
-				final JsonArray sim = unsolved.getAsJsonArray("array");
-				final Iterator<JsonElement> iter = sim.iterator();
-				while (iter.hasNext()) {
-					final JsonElement subElement = iter.next();
-					acoustics.add(solveAcoustic(subElement));
-				}
+            switch (type) {
+                case "simultaneous" -> {
+                    final List<IAcoustic> acoustics = new ArrayList<>();
+                    final JsonArray sim = unsolved.getAsJsonArray("array");
+                    for (JsonElement subElement : sim) {
+                        acoustics.add(solveAcoustic(subElement));
+                    }
 
-				final SimultaneousAcoustic a = new SimultaneousAcoustic(acoustics);
-				ret = a;
-			} else if (type.equals("delayed")) {
-				final DelayedAcoustic a = new DelayedAcoustic();
-				prepareDefaults(a);
-				setupClassics(a, unsolved);
+                    ret = new SimultaneousAcoustic(acoustics);
+                }
+                case "delayed" -> {
+                    final DelayedAcoustic a = new DelayedAcoustic();
+                    prepareDefaults(a);
+                    setupClassics(a, unsolved);
+                    if (unsolved.has("delay")) {
+                        a.setDelayMin(unsolved.get("delay").getAsInt());
+                        a.setDelayMax(unsolved.get("delay").getAsInt());
+                    }
+                    else {
+                        a.setDelayMin(unsolved.get("delay_min").getAsInt());
+                        a.setDelayMax(unsolved.get("delay_max").getAsInt());
+                    }
+                    ret = a;
+                }
+                case "probability" -> {
+                    final List<Integer> weights = new ArrayList<>();
+                    final List<IAcoustic> acoustics = new ArrayList<>();
 
-				if (unsolved.has("delay")) {
-					a.setDelayMin(unsolved.get("delay").getAsInt());
-					a.setDelayMax(unsolved.get("delay").getAsInt());
-				} else {
-					a.setDelayMin(unsolved.get("delay_min").getAsInt());
-					a.setDelayMax(unsolved.get("delay_max").getAsInt());
-				}
+                    final JsonArray sim = unsolved.getAsJsonArray("array");
+                    final Iterator<JsonElement> iter = sim.iterator();
+                    while (iter.hasNext()) {
+                        JsonElement subElement = iter.next();
+                        weights.add(subElement.getAsInt());
 
-				ret = a;
-			} else if (type.equals("probability")) {
-				final List<Integer> weights = new ArrayList<Integer>();
-				final List<IAcoustic> acoustics = new ArrayList<IAcoustic>();
+                        if (!iter.hasNext())
+                            throw new JsonParseException("Probability has odd number of children!");
 
-				final JsonArray sim = unsolved.getAsJsonArray("array");
-				final Iterator<JsonElement> iter = sim.iterator();
-				while (iter.hasNext()) {
-					JsonElement subElement = iter.next();
-					weights.add(subElement.getAsInt());
+                        subElement = iter.next();
+                        acoustics.add(solveAcoustic(subElement));
+                    }
 
-					if (!iter.hasNext())
-						throw new JsonParseException("Probability has odd number of children!");
-
-					subElement = iter.next();
-					acoustics.add(solveAcoustic(subElement));
-				}
-
-				final ProbabilityWeightsAcoustic a = new ProbabilityWeightsAcoustic(acoustics, weights);
-
-				ret = a;
-			}
+                    ret = new ProbabilityWeightsAcoustic(acoustics, weights);
+                }
+            }
 		}
 
 		return ret;

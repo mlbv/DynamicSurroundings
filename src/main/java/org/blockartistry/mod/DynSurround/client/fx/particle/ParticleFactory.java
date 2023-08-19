@@ -24,15 +24,12 @@
 
 package org.blockartistry.mod.DynSurround.client.fx.particle;
 
-import org.blockartistry.mod.DynSurround.compat.IParticleFactory;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.particle.EntityLavaFX;
 import net.minecraft.client.particle.EntityRainFX;
 import net.minecraft.client.particle.EntitySmokeFX;
-import net.minecraft.world.World;
+import org.blockartistry.mod.DynSurround.compat.IParticleFactory;
 
 @SideOnly(Side.CLIENT)
 public class ParticleFactory {
@@ -40,30 +37,9 @@ public class ParticleFactory {
 	private ParticleFactory() {
 	}
 
-	public static final IParticleFactory lavaSpark = new IParticleFactory() {
-		@Override
-		public EntityFX getEntityFX(int particleID, World world, double x, double y, double z, double dX, double dY,
-				double dZ, int... misc) {
-			final EntityLavaFX fx = new EntityLavaFX(world, x, y, z);
-			return fx;
-		}
-	};
+	public static final IParticleFactory lavaSpark = (particleID, world, x, y, z, dX, dY, dZ, misc) -> new EntityLavaFX(world, x, y, z);
 
-	public static final IParticleFactory smoke = new IParticleFactory() {
-		@Override
-		public EntityFX getEntityFX(int particleID, World world, double x, double y, double z, double dX, double dY,
-				double dZ, int... misc) {
-			final EntitySmokeFX fx = new EntitySmokeFX(world, x, y, z, dX, dY, dZ);
-			return fx;
-		}
-	};
+	public static final IParticleFactory smoke = (particleID, world, x, y, z, dX, dY, dZ, misc) -> new EntitySmokeFX(world, x, y, z, dX, dY, dZ);
 
-	public static final IParticleFactory rain = new IParticleFactory() {
-		@Override
-		public EntityFX getEntityFX(int particleID, World world, double x, double y, double z, double dX, double dY,
-				double dZ, int... misc) {
-			final EntityRainFX fx = new EntityRainFX(world, x, y, z);
-			return fx;
-		}
-	};
+	public static final IParticleFactory rain = (particleID, world, x, y, z, dX, dY, dZ, misc) -> new EntityRainFX(world, x, y, z);
 }

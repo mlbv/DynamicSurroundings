@@ -55,7 +55,7 @@ public class PatchWorldServer extends Transmorgrifier {
 	@Override
 	public boolean transmorgrify(final ClassNode cn) {
 
-		final String names[] = { "func_73051_P", "resetRainAndThunder" };
+		final String[] names = { "func_73051_P", "resetRainAndThunder" };
 		final String sigs = "()V";
 
 		final MethodNode m = findMethod(cn, sigs, names);

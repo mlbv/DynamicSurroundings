@@ -46,7 +46,7 @@ public class PatchSoundManagerClampPitch  extends Transmorgrifier {
 
 	@Override
 	public boolean transmorgrify(final ClassNode cn) {
-		final String names[] = { "getNormalizedPitch", "func_148606_a" };
+		final String[] names = { "getNormalizedPitch", "func_148606_a" };
 		final String sig = "(Lnet/minecraft/client/audio/ISound;Lnet/minecraft/client/audio/SoundPoolEntry;)F";
 
 		final MethodNode m = findMethod(cn, sig, names);
@@ -55,14 +55,14 @@ public class PatchSoundManagerClampPitch  extends Transmorgrifier {
 
 			final String owner = "org/blockartistry/mod/DynSurround/client/sound/SoundManager";
 			final String targetName = "getNormalizedPitch";
-			
+
 			final InsnList list = new InsnList();
 			list.add(new VarInsnNode(ALOAD, 1));
 			list.add(new VarInsnNode(ALOAD, 2));
 			list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, targetName, sig, false));
 			list.add(new InsnNode(Opcodes.FRETURN));
 			m.instructions = list;
-			
+
 			return true;
 		} else {
 			Transformer.log().error("Unable to locate method {}{}", names[0], sig);

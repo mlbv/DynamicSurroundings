@@ -54,8 +54,8 @@ public class GenerateBlockReport {
 	private final List<String> results;
 
 	public GenerateBlockReport() {
-		this.justNames = new ArrayList<String>();
-		this.results = new ArrayList<String>();
+		this.justNames = new ArrayList<>();
+		this.results = new ArrayList<>();
 
 		for (final Object o : Block.blockRegistry) {
 			final Block block = (Block) o;

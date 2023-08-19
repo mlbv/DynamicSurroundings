@@ -37,7 +37,7 @@ public final class SoundEffect {
 
 	private static final float[] pitchDelta = { -0.2F, 0.0F, 0.0F, 0.2F, 0.2F, 0.2F };
 
-	public static enum SoundType {
+	public enum SoundType {
 		BACKGROUND, SPOT, STEP, PERIODIC;
 
 		public static SoundType getType(final String soundType) {
@@ -106,22 +106,22 @@ public final class SoundEffect {
 	public SoundEffect(final SoundConfig record) {
 		this.sound = StringUtils.isEmpty(record.sound) ? "MISSING SOUND" : record.sound;
 		this.conditions = StringUtils.isEmpty(record.conditions) ? ".*" : record.conditions;
-		this.volume = record.volume == null ? 1.0F : record.volume.floatValue();
-		this.pitch = record.pitch == null ? 1.0F : record.pitch.floatValue();
+		this.volume = record.volume == null ? 1.0F : record.volume;
+		this.pitch = record.pitch == null ? 1.0F : record.pitch;
 		this.pattern = Pattern.compile(this.conditions);
-		this.weight = record.weight == null ? 10 : record.weight.intValue();
-		this.variable = record.variable != null && record.variable.booleanValue();
-		this.repeatDelayRandom = record.repeatDelayRandom == null ? 0 : record.repeatDelayRandom.intValue();
-		this.repeatDelay = record.repeatDelay == null ? 0 : record.repeatDelay.intValue();
+		this.weight = record.weight == null ? 10 : record.weight;
+		this.variable = record.variable != null && record.variable;
+		this.repeatDelayRandom = record.repeatDelayRandom == null ? 0 : record.repeatDelayRandom;
+		this.repeatDelay = record.repeatDelay == null ? 0 : record.repeatDelay;
 
 		if (record.soundType != null) {
 			this.type = SoundType.getType(record.soundType);
 		} else {
-			if (record.repeatDelay != null && record.repeatDelay.intValue() > 0)
+			if (record.repeatDelay != null && record.repeatDelay > 0)
 				this.type = SoundType.PERIODIC;
-			else if (record.step != null && record.step.booleanValue())
+			else if (record.step != null && record.step)
 				this.type = SoundType.STEP;
-			else if (record.spotSound != null && record.spotSound.booleanValue())
+			else if (record.spotSound != null && record.spotSound)
 				this.type = SoundType.SPOT;
 			else
 				this.type = SoundType.BACKGROUND;
@@ -156,10 +156,9 @@ public final class SoundEffect {
 	public boolean equals(final Object anObj) {
 		if (this == anObj)
 			return true;
-		if (!(anObj instanceof SoundEffect))
+		if (!(anObj instanceof SoundEffect s))
 			return false;
-		final SoundEffect s = (SoundEffect) anObj;
-		return this.sound.equals(s.sound);
+        return this.sound.equals(s.sound);
 	}
 
 	@Override

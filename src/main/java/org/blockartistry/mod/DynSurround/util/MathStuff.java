@@ -28,8 +28,8 @@ package org.blockartistry.mod.DynSurround.util;
  * Replacement algos for SIN_TABLE/cos in Minecraft's MathStuff routines. Use
  * the Riven method:
  *
- * http://riven8192.blogspot.com/2009/08/fastmath-sincos-lookup-tables.html
- * http://riven8192.blogspot.com/2009/08/fastmath-atan2-lookup-table.html
+ * <a href="http://riven8192.blogspot.com/2009/08/fastmath-sincos-lookup-tables.html">...</a>
+ * <a href="http://riven8192.blogspot.com/2009/08/fastmath-atan2-lookup-table.html">...</a>
  */
 public class MathStuff {
 
@@ -78,33 +78,33 @@ public class MathStuff {
 		}
 	}
 
-	public static final float sin(final float rad) {
+	public static float sin(final float rad) {
 		return SIN_TABLE[(int) (rad * RAD_TO_INDEX) & SIN_MASK];
 	}
 
-	public static final float cos(final float rad) {
+	public static float cos(final float rad) {
 		return SIN_TABLE[(int) ((rad + COS_TO_SIN) * RAD_TO_INDEX) & SIN_MASK];
 	}
 
-	public static final float tan(final float rad) {
+	public static float tan(final float rad) {
 		return sin(rad) / cos(rad);
 	}
 
-	public static final double sin(final double rad) {
+	public static double sin(final double rad) {
 		final float tmp = (float) rad;
 		return SIN_TABLE[(int) (tmp * RAD_TO_INDEX) & SIN_MASK];
 	}
 
-	public static final double cos(final double rad) {
+	public static double cos(final double rad) {
 		final float tmp = (float) rad;
 		return SIN_TABLE[(int) ((tmp + COS_TO_SIN) * RAD_TO_INDEX) & SIN_MASK];
 	}
 
-	public static final double tan(final double rad) {
+	public static double tan(final double rad) {
 		return tan((float) rad);
 	}
 
-	public static final float atan2(float y, float x) {
+	public static float atan2(float y, float x) {
 		final float add, mul;
 
 		if (x < 0.0f) {
@@ -130,14 +130,14 @@ public class MathStuff {
 			add = 0.0f;
 		}
 
-		final float invDiv = ATAN2_DIM_MINUS_1 / ((x < y) ? y : x);
+		final float invDiv = ATAN2_DIM_MINUS_1 / (Math.max(x, y));
 		final int xi = (int) (x * invDiv);
 		final int yi = (int) (y * invDiv);
 
 		return (ATAN2_TABLE[yi * ATAN2_DIM + xi] + add) * mul;
 	}
 
-	public static final double atan2(final double y, final double x) {
+	public static double atan2(final double y, final double x) {
 		final float tmp1 = (float) y;
 		final float tmp2 = (float) x;
 		return atan2(tmp1, tmp2);
@@ -145,11 +145,11 @@ public class MathStuff {
 
 	// Misc functions
 
-	public static final float toRadians(final float degrees) {
+	public static float toRadians(final float degrees) {
 		return degrees * DEG_TO_RAD;
 	}
 
-	public static final float toDegrees(final float radians) {
+	public static float toDegrees(final float radians) {
 		return radians * RAD_TO_DEG;
 	}
 
@@ -181,19 +181,19 @@ public class MathStuff {
 		return value;
 	}
 
-	public static final float abs(final float val) {
+	public static float abs(final float val) {
 		return val < 0.0F ? -val : val;
 	}
 
-	public static final double abs(final double val) {
+	public static double abs(final double val) {
 		return val < 0.0F ? -val : val;
 	}
 
-	public static final long abs(final long val) {
+	public static long abs(final long val) {
 		return val < 1L ? -val : val;
 	}
 
-	public static final int abs(final int val) {
+	public static int abs(final int val) {
 		return val < 1 ? -val : val;
 	}
 
@@ -220,15 +220,15 @@ public class MathStuff {
 	}
 
 	public static float clamp(final float num, final float min, final float max) {
-		return num < min ? min : (num > max ? max : num);
+		return num < min ? min : (Math.min(num, max));
 	}
 
 	public static double clamp(final double num, final double min, final double max) {
-		return num < min ? min : (num > max ? max : num);
+		return num < min ? min : (Math.min(num, max));
 	}
 
 	public static int clamp(final int num, final int min, final int max) {
-		return num < min ? min : (num > max ? max : num);
+		return num < min ? min : (Math.min(num, max));
 	}
 
 }

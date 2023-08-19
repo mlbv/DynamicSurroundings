@@ -32,5 +32,5 @@ public interface INamedAcoustic extends IAcoustic {
 	/**
 	 * Gets the name of this IAcoustic.
 	 */
-	public String getName();
+    String getName();
 }

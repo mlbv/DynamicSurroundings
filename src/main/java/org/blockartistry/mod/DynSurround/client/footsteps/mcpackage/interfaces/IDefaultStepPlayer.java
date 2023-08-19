@@ -40,5 +40,5 @@ public interface IDefaultStepPlayer {
 	/**
 	 * Play a step sound from a block.
 	 */
-	public void playStep(final EntityLivingBase entity, final Association non);
+    void playStep(final EntityLivingBase entity, final Association non);
 }

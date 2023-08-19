@@ -31,6 +31,6 @@ import net.minecraft.client.renderer.EntityRenderer;
 @SideOnly(Side.CLIENT)
 public interface IAtmosRenderer {
 
-	public void render(final EntityRenderer renderer, final float partialTicks);
+	void render(final EntityRenderer renderer, final float partialTicks);
 
 }

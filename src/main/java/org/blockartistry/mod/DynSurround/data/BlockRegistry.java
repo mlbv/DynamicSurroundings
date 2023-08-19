@@ -51,15 +51,15 @@ import net.minecraft.init.Blocks;
 
 public final class BlockRegistry {
 
-	private static final Map<Block, Entry> registry = new IdentityHashMap<Block, Entry>();
+	private static final Map<Block, Entry> registry = new IdentityHashMap<>();
 
 	private static final class Entry implements Comparable<Entry> {
 		public final Block block;
 		public int chance = 100;
 		public int stepChance = 100;
-		public final List<SoundEffect> sounds = new ArrayList<SoundEffect>();
-		public final List<SoundEffect> stepSounds = new ArrayList<SoundEffect>();
-		public final List<BlockEffect> effects = new ArrayList<BlockEffect>();
+		public final List<SoundEffect> sounds = new ArrayList<>();
+		public final List<SoundEffect> stepSounds = new ArrayList<>();
+		public final List<BlockEffect> effects = new ArrayList<>();
 
 		public Entry(final Block block) {
 			this.block = block;
@@ -126,7 +126,7 @@ public final class BlockRegistry {
 	private static SoundEffect getRandomSound(final List<SoundEffect> list, final Random random,
 			final String conditions) {
 		int totalWeight = 0;
-		final List<SoundEffect> candidates = new ArrayList<SoundEffect>();
+		final List<SoundEffect> candidates = new ArrayList<>();
 		for (final SoundEffect s : list)
 			if (s.matches(conditions)) {
 				candidates.add(s);
@@ -139,7 +139,7 @@ public final class BlockRegistry {
 			return candidates.get(0);
 
 		int targetWeight = random.nextInt(totalWeight);
-		int i = 0;
+		int i;
 		for (i = candidates.size(); (targetWeight -= candidates.get(i - 1).weight) >= 0; i--)
 			;
 
@@ -217,17 +217,17 @@ public final class BlockRegistry {
 				}
 
 				// Reset of a block clears all registry
-				if (entry.soundReset != null && entry.soundReset.booleanValue())
+				if (entry.soundReset != null && entry.soundReset)
 					blockData.sounds.clear();
-				if (entry.stepSoundReset != null && entry.stepSoundReset.booleanValue())
+				if (entry.stepSoundReset != null && entry.stepSoundReset)
 					blockData.stepSounds.clear();
-				if (entry.effectReset != null && entry.effectReset.booleanValue())
+				if (entry.effectReset != null && entry.effectReset)
 					blockData.effects.clear();
 
 				if (entry.chance != null)
-					blockData.chance = entry.chance.intValue();
+					blockData.chance = entry.chance;
 				if (entry.stepChance != null)
-					blockData.stepChance = entry.stepChance.intValue();
+					blockData.stepChance = entry.stepChance;
 
 				for (final SoundConfig sr : entry.sounds) {
 					if (sr.sound != null && !SoundRegistry.isSoundBlocked(sr.sound)) {
@@ -242,8 +242,8 @@ public final class BlockRegistry {
 				for (final Effect e : entry.effects) {
 					if (StringUtils.isEmpty(e.effect))
 						continue;
-					BlockEffect blockEffect = null;
-					final int chance = e.chance != null ? e.chance.intValue() : 100;
+					BlockEffect blockEffect;
+					final int chance = e.chance != null ? e.chance : 100;
 					if (StringUtils.equalsIgnoreCase("steam", e.effect))
 						blockEffect = new JetEffect.Steam(chance);
 					else if (StringUtils.equalsIgnoreCase("fire", e.effect))

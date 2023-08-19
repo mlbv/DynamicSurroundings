@@ -63,7 +63,7 @@ public class AcousticsManager extends AcousticsLibrary implements ISoundPlayer, 
 	private static final float LATENESS_THRESHOLD_DIVIDER = 1.2f;
 	private static final double EARLYNESS_THRESHOLD_POW = 0.75d;
 
-	private final List<PendingSound> pending = new ArrayList<PendingSound>();
+	private final List<PendingSound> pending = new ArrayList<>();
 	private final IIsolator isolator;
 	private long minimum;
 

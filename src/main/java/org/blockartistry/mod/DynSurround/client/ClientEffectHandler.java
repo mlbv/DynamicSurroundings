@@ -49,7 +49,7 @@ import net.minecraftforge.event.world.WorldEvent;
 @SideOnly(Side.CLIENT)
 public class ClientEffectHandler {
 
-	private static final List<IClientEffectHandler> effectHandlers = new ArrayList<IClientEffectHandler>();
+	private static final List<IClientEffectHandler> effectHandlers = new ArrayList<>();
 
 	public static void register(final IClientEffectHandler handler) {
 		effectHandlers.add(handler);

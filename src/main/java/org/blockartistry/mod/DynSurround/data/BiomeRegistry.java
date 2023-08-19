@@ -70,9 +70,9 @@ public final class BiomeRegistry {
 
 	private static class Entry implements Comparable<Entry> {
 
-		private static Class<?> bopBiome = null;
-		private static Field bopBiomeFogDensity = null;
-		private static Field bopBiomeFogColor = null;
+		private static Class<?> bopBiome;
+		private static Field bopBiomeFogDensity;
+		private static Field bopBiomeFogColor;
 
 		static {
 			try {
@@ -104,8 +104,8 @@ public final class BiomeRegistry {
 		public Entry(final BiomeGenBase biome) {
 			this.biome = biome;
 			this.hasPrecipitation = biome.canSpawnLightningBolt() || biome.getEnableSnow();
-			this.sounds = new ArrayList<SoundEffect>();
-			this.spotSounds = new ArrayList<SoundEffect>();
+			this.sounds = new ArrayList<>();
+			this.spotSounds = new ArrayList<>();
 			this.spotSoundChance = 1200;
 
 			// If it is a BOP biome initialize from the BoP Biome
@@ -118,8 +118,7 @@ public final class BiomeRegistry {
 						this.fogColor = new Color(color);
 						this.fogDensity = bopBiomeFogDensity.getFloat(biome);
 					}
-				} catch (final Exception ex) {
-
+				} catch (final Exception ignored) {
 				}
 			}
 		}
@@ -132,7 +131,7 @@ public final class BiomeRegistry {
 		}
 
 		public List<SoundEffect> findSoundMatches(final String conditions) {
-			final List<SoundEffect> results = new ArrayList<SoundEffect>();
+			final List<SoundEffect> results = new ArrayList<>();
 			for (final SoundEffect sound : this.sounds)
 				if (sound.matches(conditions))
 					results.add(sound);
@@ -154,9 +153,9 @@ public final class BiomeRegistry {
 			if (!this.hasPrecipitation && !this.hasDust && !this.hasAurora && !this.hasFog)
 				builder.append(" NONE");
 			if (this.dustColor != null)
-				builder.append(" dustColor:").append(this.dustColor.toString());
+				builder.append(" dustColor:").append(this.dustColor);
 			if (this.fogColor != null) {
-				builder.append(" fogColor:").append(this.fogColor.toString());
+				builder.append(" fogColor:").append(this.fogColor);
 				builder.append(" fogDensity:").append(this.fogDensity);
 			}
 
@@ -187,7 +186,7 @@ public final class BiomeRegistry {
 		if (biome == null)
 			return "(Bad Biome)";
 		if (StringUtils.isEmpty(biome.biomeName))
-			return new StringBuilder().append('#').append(biome.biomeID).toString();
+			return "#" + biome.biomeID;
 		return biome.biomeName;
 	}
 
@@ -317,7 +316,7 @@ public final class BiomeRegistry {
 			return null;
 
 		int totalWeight = 0;
-		final List<SoundEffect> candidates = new ArrayList<SoundEffect>();
+		final List<SoundEffect> candidates = new ArrayList<>();
 		for (final SoundEffect s : e.spotSounds)
 			if (s.matches(conditions)) {
 				candidates.add(s);
@@ -330,7 +329,7 @@ public final class BiomeRegistry {
 			return candidates.get(0);
 
 		int targetWeight = random.nextInt(totalWeight);
-		int i = 0;
+		int i;
 		for (i = candidates.size(); (targetWeight -= candidates.get(i - 1).weight) >= 0; i--)
 			;
 
@@ -363,11 +362,11 @@ public final class BiomeRegistry {
 		}
 	}
 
-	final static boolean isBiomeMatch(final BiomeConfig.Entry entry, final String biomeName) {
+	static boolean isBiomeMatch(final BiomeConfig.Entry entry, final String biomeName) {
 		if (Pattern.matches(entry.biomeName, biomeName))
 			return true;
 		final String alias = biomeAliases.get(biomeName);
-		return alias == null ? false : Pattern.matches(entry.biomeName, alias);
+		return alias != null && Pattern.matches(entry.biomeName, alias);
 	}
 
 	private static void process(final BiomeConfig config) {
@@ -375,15 +374,15 @@ public final class BiomeRegistry {
 			for (final Entry biomeEntry : registry.values()) {
 				if (isBiomeMatch(entry, resolveName(biomeEntry.biome))) {
 					if (entry.hasPrecipitation != null)
-						biomeEntry.hasPrecipitation = entry.hasPrecipitation.booleanValue();
+						biomeEntry.hasPrecipitation = entry.hasPrecipitation;
 					if (entry.hasAurora != null)
-						biomeEntry.hasAurora = entry.hasAurora.booleanValue();
+						biomeEntry.hasAurora = entry.hasAurora;
 					if (entry.hasDust != null)
-						biomeEntry.hasDust = entry.hasDust.booleanValue();
+						biomeEntry.hasDust = entry.hasDust;
 					if (entry.hasFog != null)
-						biomeEntry.hasFog = entry.hasFog.booleanValue();
+						biomeEntry.hasFog = entry.hasFog;
 					if (entry.fogDensity != null)
-						biomeEntry.fogDensity = entry.fogDensity.floatValue();
+						biomeEntry.fogDensity = entry.fogDensity;
 					if (entry.fogColor != null) {
 						final int[] rgb = MyUtils.splitToInts(entry.fogColor, ',');
 						if (rgb.length == 3)
@@ -394,13 +393,13 @@ public final class BiomeRegistry {
 						if (rgb.length == 3)
 							biomeEntry.dustColor = new Color(rgb[0], rgb[1], rgb[2]);
 					}
-					if (entry.soundReset != null && entry.soundReset.booleanValue()) {
-						biomeEntry.sounds = new ArrayList<SoundEffect>();
-						biomeEntry.spotSounds = new ArrayList<SoundEffect>();
+					if (entry.soundReset != null && entry.soundReset) {
+						biomeEntry.sounds = new ArrayList<>();
+						biomeEntry.spotSounds = new ArrayList<>();
 					}
 
 					if (entry.spotSoundChance != null)
-						biomeEntry.spotSoundChance = entry.spotSoundChance.intValue();
+						biomeEntry.spotSoundChance = entry.spotSoundChance;
 
 					for (final SoundConfig sr : entry.sounds) {
 						if (SoundRegistry.isSoundBlocked(sr.sound))

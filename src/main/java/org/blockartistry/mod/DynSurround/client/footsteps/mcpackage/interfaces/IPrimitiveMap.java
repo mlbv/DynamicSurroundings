@@ -32,11 +32,11 @@ public interface IPrimitiveMap extends IRegistration {
 	/**
 	 * This will return null if the primitive is not defined.
 	 */
-	public String getPrimitiveMap(final String primitive);
+    String getPrimitiveMap(final String primitive);
 
 	/**
 	 * This will return null if the substrate does not resolve.
 	 */
-	public String getPrimitiveMapSubstrate(final String primitive, final String substrate);
+    String getPrimitiveMapSubstrate(final String primitive, final String substrate);
 
 }

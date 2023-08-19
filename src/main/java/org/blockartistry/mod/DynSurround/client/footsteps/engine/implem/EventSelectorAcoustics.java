@@ -40,7 +40,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class EventSelectorAcoustics implements INamedAcoustic {
 
 	private final String name;
-	private final Map<EventType, IAcoustic> pairs = new EnumMap<EventType, IAcoustic>(EventType.class);
+	private final Map<EventType, IAcoustic> pairs = new EnumMap<>(EventType.class);
 
 	public EventSelectorAcoustics(final String acousticName) {
 		this.name = acousticName;

@@ -108,8 +108,7 @@ public class Footsteps implements IResourceManagerReloadListener, IClientEffectH
 				if (stream != null)
 					try {
 						stream.close();
-					} catch (final IOException e) {
-						;
+					} catch (final IOException ignored) {
 					}
 			}
 		}
@@ -134,8 +133,7 @@ public class Footsteps implements IResourceManagerReloadListener, IClientEffectH
 				if (stream != null)
 					try {
 						stream.close();
-					} catch (final IOException e) {
-						;
+					} catch (final IOException ignored) {
 					}
 			}
 		}
@@ -158,8 +156,7 @@ public class Footsteps implements IResourceManagerReloadListener, IClientEffectH
 				if (stream != null)
 					try {
 						stream.close();
-					} catch (final IOException e) {
-						;
+					} catch (final IOException ignored) {
 					}
 			}
 		}
@@ -189,8 +186,7 @@ public class Footsteps implements IResourceManagerReloadListener, IClientEffectH
 						scanner.close();
 					if (stream != null)
 						stream.close();
-				} catch (final IOException e) {
-					;
+				} catch (final IOException ignored) {
 				}
 			}
 		}

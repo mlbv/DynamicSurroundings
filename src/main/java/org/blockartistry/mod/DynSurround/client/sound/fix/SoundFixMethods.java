@@ -24,24 +24,20 @@ public class SoundFixMethods {
 				source.cleanup();
 				return null;
 			}
-		} catch (final IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (final IllegalAccessException e) {
+		} catch (final IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
-		return source;
+        return source;
 	}
 
 	public static void cleanupSource(final Source source) {
 		if (source.toStream) {
 			try {
 				removed.setBoolean(source, true);
-			} catch (final IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (final IllegalAccessException e) {
+			} catch (final IllegalArgumentException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
-		} else {
+        } else {
 			source.cleanup();
 		}
 	}

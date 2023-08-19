@@ -49,7 +49,7 @@ public class SoundPlayFlush extends Transmorgrifier {
 
 	@Override
 	public boolean transmorgrify(final ClassNode cn) {
-		final String names[] = { "playSound", "func_148611_c" };
+		final String[] names = { "playSound", "func_148611_c" };
 		final String sig = "(Lnet/minecraft/client/audio/ISound;)V";
 
 		final MethodNode m = findMethod(cn, sig, names);
@@ -65,9 +65,8 @@ public class SoundPlayFlush extends Transmorgrifier {
 
 			for (final Iterator<?> iterator = m.instructions.iterator(); iterator.hasNext();) {
 				final AbstractInsnNode insn = (AbstractInsnNode) iterator.next();
-				if (insn instanceof MethodInsnNode) {
-					final MethodInsnNode mn = (MethodInsnNode) insn;
-					if (mn.owner.equals("net/minecraft/client/audio/SoundManager$SoundSystemStarterThread")
+				if (insn instanceof MethodInsnNode mn) {
+                    if (mn.owner.equals("net/minecraft/client/audio/SoundManager$SoundSystemStarterThread")
 							&& mn.name.equals("play")) {
 						m.instructions.insert(insn, list);
 						return true;

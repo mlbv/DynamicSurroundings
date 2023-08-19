@@ -58,9 +58,7 @@ public abstract class BlockEffect {
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("chance:").append(this.chance);
-		builder.append(' ').append(this.getClass().getSimpleName());
-		return builder.toString();
+        return "chance:" + this.chance +
+            ' ' + this.getClass().getSimpleName();
 	}
 }

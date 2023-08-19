@@ -41,7 +41,7 @@ public final class BiomeSurveyHandler implements IClientEffectHandler {
 	private static final int BIOME_SURVEY_RANGE = 6;
 
 	private static int area;
-	private static final TObjectIntHashMap<BiomeGenBase> weights = new TObjectIntHashMap<BiomeGenBase>();
+	private static final TObjectIntHashMap<BiomeGenBase> weights = new TObjectIntHashMap<>();
 
 	private static BiomeGenBase lastPlayerBiome = null;
 	private static int lastDimension = 0;

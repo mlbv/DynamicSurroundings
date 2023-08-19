@@ -54,8 +54,6 @@ public class PendingSound {
 
 	/**
 	 * Play the sound stored in this pending sound.
-	 *
-	 * @param player
 	 */
 	public void playSound(final ISoundPlayer player) {
 		player.playSound(this.location, this.soundName, this.volume, this.pitch, this.options);
@@ -63,8 +61,6 @@ public class PendingSound {
 
 	/**
 	 * Returns the time after which this sound plays.
-	 *
-	 * @return
 	 */
 	public long getTimeToPlay() {
 		return this.timeToPlay;
@@ -73,8 +69,6 @@ public class PendingSound {
 	/**
 	 * Get the maximum delay of this sound, for threshold purposes. If the value is
 	 * negative, the sound will not be skippable.
-	 *
-	 * @return
 	 */
 	public long getMaximumBase() {
 		return this.maximum;

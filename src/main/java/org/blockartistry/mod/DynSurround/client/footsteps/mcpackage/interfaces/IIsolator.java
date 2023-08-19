@@ -33,32 +33,32 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public interface IIsolator {
 
-	public abstract void onFrame();
+	void onFrame();
 
-	public abstract ILibrary getAcoustics();
+	ILibrary getAcoustics();
 
-	public abstract ISolver getSolver();
+	ISolver getSolver();
 
-	public abstract IBlockMap getBlockMap();
+	IBlockMap getBlockMap();
 
-	public abstract IPrimitiveMap getPrimitiveMap();
+	IPrimitiveMap getPrimitiveMap();
 
-	public abstract ISoundPlayer getSoundPlayer();
+	ISoundPlayer getSoundPlayer();
 
-	public abstract IDefaultStepPlayer getDefaultStepPlayer();
+	IDefaultStepPlayer getDefaultStepPlayer();
 
 	//
 
-	public abstract void setAcoustics(final ILibrary acoustics);
+	void setAcoustics(final ILibrary acoustics);
 
-	public abstract void setSolver(final ISolver solver);
+	void setSolver(final ISolver solver);
 
-	public abstract void setBlockMap(final IBlockMap blockMap);
+	void setBlockMap(final IBlockMap blockMap);
 
-	public abstract void setPrimitiveMap(final IPrimitiveMap primitiveMap);
+	void setPrimitiveMap(final IPrimitiveMap primitiveMap);
 
-	public abstract void setSoundPlayer(final ISoundPlayer soundPlayer);
+	void setSoundPlayer(final ISoundPlayer soundPlayer);
 
-	public abstract void setDefaultStepPlayer(final IDefaultStepPlayer defaultStepPlayer);
+	void setDefaultStepPlayer(final IDefaultStepPlayer defaultStepPlayer);
 
 }

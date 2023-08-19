@@ -38,10 +38,10 @@ import net.minecraftforge.common.MinecraftForge;
 
 public final class SoundRegistry {
 
-	private static final List<Pattern> cullSoundNamePatterns = new ArrayList<Pattern>();
-	private static final List<Pattern> blockSoundNamePatterns = new ArrayList<Pattern>();
-	private static final TObjectFloatHashMap<String> volumeControl = new TObjectFloatHashMap<String>(
-			Constants.DEFAULT_CAPACITY, Constants.DEFAULT_LOAD_FACTOR, 1.0F);
+	private static final List<Pattern> cullSoundNamePatterns = new ArrayList<>();
+	private static final List<Pattern> blockSoundNamePatterns = new ArrayList<>();
+	private static final TObjectFloatHashMap<String> volumeControl = new TObjectFloatHashMap<>(
+        Constants.DEFAULT_CAPACITY, Constants.DEFAULT_LOAD_FACTOR, 1.0F);
 
 	public static void initialize() {
 		cullSoundNamePatterns.clear();

@@ -131,11 +131,11 @@ public abstract class Transmorgrifier {
 	@Nullable
 	protected MethodNode findMethod(@Nonnull final ClassNode cn, @Nonnull final String signature,
 			@Nonnull final String... names) {
-		for (int i = 0; i < names.length; i++) {
-			final MethodNode m = findMethod(cn, signature, names[i]);
-			if (m != null)
-				return m;
-		}
+        for (String name : names) {
+            final MethodNode m = findMethod(cn, signature, name);
+            if (m != null)
+                return m;
+        }
 		return null;
 	}
 

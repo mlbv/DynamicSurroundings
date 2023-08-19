@@ -238,7 +238,7 @@ public class EnvironStateHandler implements IClientEffectHandler {
 		public static DimensionRegistry getDimensionInfo() {
 			return dimensionInfo;
 		}
-		
+
 		public static int getDimensionId() {
 			return dimensionId;
 		}
@@ -254,9 +254,8 @@ public class EnvironStateHandler implements IClientEffectHandler {
 		}
 
 		public static boolean isPlayer(final Entity entity) {
-			if (entity instanceof EntityPlayer) {
-				final EntityPlayer ep = (EntityPlayer) entity;
-				return ep.getUniqueID().equals(getPlayer().getUniqueID());
+			if (entity instanceof EntityPlayer ep) {
+                return ep.getUniqueID().equals(getPlayer().getUniqueID());
 			}
 			return false;
 		}

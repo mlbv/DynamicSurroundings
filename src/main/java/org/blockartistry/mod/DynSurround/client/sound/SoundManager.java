@@ -61,8 +61,8 @@ public class SoundManager {
 
 	private static final int AGE_THRESHOLD_TICKS = 5;
 	private static final int SOUND_QUEUE_SLACK = 6;
-	private static final Map<SoundEffect, Emitter> emitters = new HashMap<SoundEffect, Emitter>();
-	private static final List<SpotSound> pending = new ArrayList<SpotSound>();
+	private static final Map<SoundEffect, Emitter> emitters = new HashMap<>();
+	private static final List<SpotSound> pending = new ArrayList<>();
 
 	private static int normalChannelCount = 0;
 	private static int streamChannelCount = 0;
@@ -77,7 +77,7 @@ public class SoundManager {
 	public static void queueAmbientSounds(final List<SoundEffect> sounds) {
 		// Need to remove sounds that are active but not
 		// in the incoming list
-		final List<SoundEffect> active = new ArrayList<SoundEffect>(emitters.keySet());
+		final List<SoundEffect> active = new ArrayList<>(emitters.keySet());
 		for (final SoundEffect effect : active) {
 			if (!sounds.contains(effect))
 				emitters.remove(effect).fade();
@@ -108,7 +108,7 @@ public class SoundManager {
 		while (pitr.hasNext()) {
 			final SpotSound sound = pitr.next();
 			if (sound.getTickAge() >= AGE_THRESHOLD_TICKS) {
-				ModLog.debug("AGING: " + sound.toString());
+				ModLog.debug("AGING: " + sound);
 				pitr.remove();
 			} else if (sound.getTickAge() >= 0 && canFitSound()) {
 				playSound(sound);
@@ -138,7 +138,7 @@ public class SoundManager {
 	static void playSound(final ISound sound) {
 		if (sound != null) {
 			if (ModOptions.enableDebugLogging)
-				ModLog.debug("PLAYING: " + sound.toString());
+				ModLog.debug("PLAYING: " + sound);
 			final SoundHandler h = Minecraft.getMinecraft().getSoundHandler();
 			h.playSound(sound);
 		}
@@ -181,7 +181,7 @@ public class SoundManager {
 	}
 
 	public static List<String> getSounds() {
-		final List<String> result = new ArrayList<String>();
+		final List<String> result = new ArrayList<>();
 		for (final SoundEffect effect : emitters.keySet())
 			result.add("EMITTER: " + effect.toString() + "[vol:" + emitters.get(effect).getVolume() + "]");
 		for (final SpotSound effect : pending)
@@ -191,7 +191,7 @@ public class SoundManager {
 
 	private static float getVolume(@Nonnull final SoundCategory category) {
 		final GameSettings settings = Minecraft.getMinecraft().gameSettings;
-		return settings != null && category != null && category != SoundCategory.MASTER
+		return settings != null && category != SoundCategory.MASTER
 				? settings.getSoundLevel(category)
 				: 1.0F;
 	}

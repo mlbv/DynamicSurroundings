@@ -356,43 +356,43 @@ public final class ModOptions {
 		config.setCategoryRequiresMcRestart(CATEGORY_LOGGING_CONTROL, false);
 		config.setCategoryRequiresWorldRestart(CATEGORY_LOGGING_CONTROL, false);
 		config.setCategoryComment(CATEGORY_LOGGING_CONTROL, "Defines how Dynamic Surroundings logging will behave");
-		config.setCategoryPropertyOrder(CATEGORY_LOGGING_CONTROL, new ArrayList<String>(loggingSort));
+		config.setCategoryPropertyOrder(CATEGORY_LOGGING_CONTROL, new ArrayList<>(loggingSort));
 
 		// CATEGORY: Rain
 		config.setCategoryRequiresMcRestart(CATEGORY_RAIN, false);
 		config.setCategoryRequiresWorldRestart(CATEGORY_RAIN, false);
 		config.setCategoryComment(CATEGORY_RAIN, "Options that control rain effects in the client");
-		config.setCategoryPropertyOrder(CATEGORY_RAIN, new ArrayList<String>(rainSort));
+		config.setCategoryPropertyOrder(CATEGORY_RAIN, new ArrayList<>(rainSort));
 
 		// CATEGORY: General
 		config.setCategoryRequiresMcRestart(CATEGORY_GENERAL, false);
 		config.setCategoryRequiresWorldRestart(CATEGORY_GENERAL, false);
 		config.setCategoryComment(CATEGORY_GENERAL, "Miscellaneous settings");
-		config.setCategoryPropertyOrder(CATEGORY_GENERAL, new ArrayList<String>(generalSort));
+		config.setCategoryPropertyOrder(CATEGORY_GENERAL, new ArrayList<>(generalSort));
 
 		// CATEGORY: Player
 		config.setCategoryRequiresMcRestart(CATEGORY_PLAYER, false);
 		config.setCategoryRequiresWorldRestart(CATEGORY_PLAYER, false);
 		config.setCategoryComment(CATEGORY_PLAYER, "General options for defining sound and effects the player entity");
-		config.setCategoryPropertyOrder(CATEGORY_PLAYER, new ArrayList<String>(playerSort));
+		config.setCategoryPropertyOrder(CATEGORY_PLAYER, new ArrayList<>(playerSort));
 
 		// CATEGORY: Aurora
 		config.setCategoryRequiresMcRestart(CATEGORY_AURORA, false);
 		config.setCategoryRequiresWorldRestart(CATEGORY_AURORA, false);
 		config.setCategoryComment(CATEGORY_AURORA, "Options that control Aurora behavior and rendering");
-		config.setCategoryPropertyOrder(CATEGORY_AURORA, new ArrayList<String>(auroraSort));
+		config.setCategoryPropertyOrder(CATEGORY_AURORA, new ArrayList<>(auroraSort));
 
 		// CATEGORY: Fog
 		config.setCategoryRequiresMcRestart(CATEGORY_FOG, false);
 		config.setCategoryRequiresWorldRestart(CATEGORY_FOG, false);
 		config.setCategoryComment(CATEGORY_FOG, "Options that control the various fog effects in the client");
-		config.setCategoryPropertyOrder(CATEGORY_FOG, new ArrayList<String>(fogSort));
+		config.setCategoryPropertyOrder(CATEGORY_FOG, new ArrayList<>(fogSort));
 
 		// CATEGORY: Biomes
 		config.setCategoryRequiresMcRestart(CATEGORY_BIOMES, false);
 		config.setCategoryRequiresWorldRestart(CATEGORY_BIOMES, false);
 		config.setCategoryComment(CATEGORY_BIOMES, "Options for controlling biome sound/effects");
-		config.setCategoryPropertyOrder(CATEGORY_BIOMES, new ArrayList<String>(biomesSort));
+		config.setCategoryPropertyOrder(CATEGORY_BIOMES, new ArrayList<>(biomesSort));
 
 		// CATEGORY: Dimensions
 		config.setCategoryRequiresMcRestart(CATEGORY_DIMENSIONS, false);
@@ -409,13 +409,13 @@ public final class ModOptions {
 		config.setCategoryRequiresMcRestart(CATEGORY_SOUND, false);
 		config.setCategoryRequiresWorldRestart(CATEGORY_SOUND, false);
 		config.setCategoryComment(CATEGORY_SOUND, "General options for defining sound effects");
-		config.setCategoryPropertyOrder(CATEGORY_SOUND, new ArrayList<String>(soundsSort));
+		config.setCategoryPropertyOrder(CATEGORY_SOUND, new ArrayList<>(soundsSort));
 
 		// CATEGORY: player.potion hud
 		config.setCategoryRequiresMcRestart(CATEGORY_POTION_HUD, false);
 		config.setCategoryRequiresWorldRestart(CATEGORY_POTION_HUD, false);
 		config.setCategoryComment(CATEGORY_POTION_HUD, "Options for the Potion HUD overlay");
-		config.setCategoryPropertyOrder(CATEGORY_POTION_HUD, new ArrayList<String>(potionHudSort));
+		config.setCategoryPropertyOrder(CATEGORY_POTION_HUD, new ArrayList<>(potionHudSort));
 
 		// Iterate through the config list looking for properties without
 		// comments. These will
@@ -425,7 +425,7 @@ public final class ModOptions {
 	}
 
 	private static void scrubCategory(final ConfigCategory category) {
-		final List<String> killList = new ArrayList<String>();
+		final List<String> killList = new ArrayList<>();
 		for (final Entry<String, Property> entry : category.entrySet())
 			if (StringUtils.isEmpty(entry.getValue().comment))
 				killList.add(entry.getKey());

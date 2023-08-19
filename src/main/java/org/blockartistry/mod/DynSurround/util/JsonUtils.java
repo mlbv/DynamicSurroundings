@@ -34,41 +34,20 @@ import com.google.gson.stream.JsonReader;
 
 public class JsonUtils {
 
-	@SuppressWarnings({ "unused" })
 	public static <T> T load(final File file, final Class<T> clazz) throws Exception {
-		InputStream stream = null;
 
-		try {
-			stream = new FileInputStream(file);
-			if (stream != null)
-				return load(stream, clazz);
-		} finally {
-			try {
-				if (stream != null)
-					stream.close();
-			} catch (final Throwable t) {
-				;
-			}
-		}
-		return clazz.newInstance();
-	}
+        try (InputStream stream = new FileInputStream(file)) {
+            return load(stream, clazz);
+        }
+    }
 
 	public static <T> T load(final String modId, final Class<T> clazz) throws Exception {
 		final String fileName = modId.replaceAll("[^a-zA-Z0-9.-]", "_");
-		InputStream stream = null;
 
-		try {
-			stream = clazz.getResourceAsStream("/assets/dsurround/data/" + fileName + ".json");
-			if (stream != null)
-				return load(stream, clazz);
-		} finally {
-			try {
-				if (stream != null)
-					stream.close();
-			} catch (final Throwable t) {
-				;
-			}
-		}
+        try (InputStream stream = clazz.getResourceAsStream("/assets/dsurround/data/" + fileName + ".json")) {
+            if (stream != null)
+                return load(stream, clazz);
+        }
 		return clazz.newInstance();
 	}
 
@@ -86,8 +65,7 @@ public class JsonUtils {
 					reader2.close();
 				if (reader != null)
 					reader.close();
-			} catch (final Exception ex) {
-				;
+			} catch (final Exception ignored) {
 			}
 		}
 	}

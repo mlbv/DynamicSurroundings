@@ -87,19 +87,16 @@ public final class AuroraData implements INBTSerialization {
 
 	@Override
 	public boolean equals(final Object anObj) {
-		if (!(anObj instanceof AuroraData))
+		if (!(anObj instanceof AuroraData a))
 			return false;
-		final AuroraData a = (AuroraData) anObj;
-		return (this.dimensionId == a.dimensionId) && (this.posX == a.posX) && (this.posZ == a.posZ);
+        return (this.dimensionId == a.dimensionId) && (this.posX == a.posX) && (this.posZ == a.posZ);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("[x: ").append(this.posX).append(", z: ").append(this.posZ).append(']');
-		builder.append(" color: ").append(this.colorSet);
-		builder.append(" preset: ").append(this.preset);
-		builder.append(" seed: ").append(this.seed);
-		return builder.toString();
+        return "[x: " + this.posX + ", z: " + this.posZ + ']' +
+            " color: " + this.colorSet +
+            " preset: " + this.preset +
+            " seed: " + this.seed;
 	}
 }

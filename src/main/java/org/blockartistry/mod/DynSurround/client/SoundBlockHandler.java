@@ -47,8 +47,8 @@ import net.minecraftforge.client.event.sound.PlaySoundEvent17;
 @SideOnly(Side.CLIENT)
 public class SoundBlockHandler implements IClientEffectHandler {
 
-	private final Set<String> soundsToBlock = new HashSet<String>();
-	private final TObjectIntHashMap<String> soundCull = new TObjectIntHashMap<String>();
+	private final Set<String> soundsToBlock = new HashSet<>();
+	private final TObjectIntHashMap<String> soundCull = new TObjectIntHashMap<>();
 
 	public SoundBlockHandler() {
 	}

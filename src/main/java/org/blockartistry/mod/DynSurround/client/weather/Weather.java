@@ -53,7 +53,7 @@ public enum Weather {
 	private final String rainSound;
 	private final String dustSound;
 
-	private Weather() {
+	Weather() {
 		this.level = -10.0F;
 		this.rainTexture = EntityRenderer.locationRainPng;
 		this.snowTexture = EntityRenderer.locationSnowPng;
@@ -62,7 +62,7 @@ public enum Weather {
 		this.dustSound = String.format("%s:%s", Module.MOD_ID, "dust");
 	}
 
-	private Weather(final float level, final String intensity) {
+	Weather(final float level, final String intensity) {
 		this.level = level;
 		this.rainTexture = new ResourceLocation(Module.MOD_ID,
 				String.format("textures/environment/rain_%s.png", intensity));
@@ -85,7 +85,7 @@ public enum Weather {
 	public static float getIntensityLevel() {
 		return Math.min(getWorld().rainingStrength, intensityLevel);
 	}
-	
+
 	public static float getMaxIntensityLevel() {
 		return intensityLevel;
 	}
@@ -97,7 +97,7 @@ public enum Weather {
 	public static float getRainStrength() {
 		return getWorld().rainingStrength;
 	}
-	
+
 	public static float getThunderStrength() {
 		return getWorld().thunderingStrength;
 	}
@@ -175,11 +175,9 @@ public enum Weather {
 	}
 
 	public static String diagnostic() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("Storm: ").append(intensity.name());
-		builder.append(" level:").append(intensityLevel);
-		builder.append(" str:").append(EnvironState.getWorld().getRainStrength(1.0F));
-		return builder.toString();
+        return "Storm: " + intensity.name() +
+            " level:" + intensityLevel +
+            " str:" + EnvironState.getWorld().getRainStrength(1.0F);
 	}
 
 }

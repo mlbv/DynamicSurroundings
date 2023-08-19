@@ -69,7 +69,6 @@ class Emitter {
 			SoundManager.playSound(this.activeSound);
 		} catch (final Throwable t) {
 			ModLog.error("Unable to play sound", t);
-			;
 		}
 	}
 

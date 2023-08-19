@@ -47,7 +47,7 @@ public final class ColorPair {
 	 */
 	public final Color fadeColor;
 
-	private static final List<ColorPair> PAIRS = new ArrayList<ColorPair>();
+	private static final List<ColorPair> PAIRS = new ArrayList<>();
 
 	static {
 		PAIRS.add(new ColorPair(new Color(0x0, 0xff, 0x99), new Color(0x33, 0xff, 0x00)));

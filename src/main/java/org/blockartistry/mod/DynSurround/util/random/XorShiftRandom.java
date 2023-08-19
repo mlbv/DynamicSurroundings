@@ -30,7 +30,6 @@ import org.blockartistry.mod.DynSurround.util.MathStuff;
 /**
  * @see "http://xoroshiro.di.unimi.it/xoroshiro128plus.c"
  */
-@SuppressWarnings("serial")
 public final class XorShiftRandom extends Random {
 
 	private static final double DOUBLE_UNIT = 0x1.0p-53; // 1.0 / (1L << 53);
@@ -102,7 +101,7 @@ public final class XorShiftRandom extends Random {
 	}
 
 	// https://en.wikipedia.org/wiki/Marsaglia_polar_method
-	protected double genGaussian() {
+    private double genGaussian() {
 		double v1, v2, s;
 		do {
 			v1 = 2 * nextDouble() - 1; // between -1 and 1
@@ -139,12 +138,7 @@ public final class XorShiftRandom extends Random {
 		return ((int) nextLong()) >>> (32 - bits);
 	}
 
-	private static final ThreadLocal<XorShiftRandom> localRandom = new ThreadLocal<XorShiftRandom>() {
-		@Override
-		public XorShiftRandom initialValue() {
-			return new XorShiftRandom();
-		}
-	};
+	private static final ThreadLocal<XorShiftRandom> localRandom = ThreadLocal.withInitial(XorShiftRandom::new);
 
 	public static Random current() {
 		return localRandom.get();

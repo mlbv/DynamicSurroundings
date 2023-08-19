@@ -55,13 +55,13 @@ public final class DimensionEffectData implements INBTSerialization {
 		public final static String MIN_INTENSITY = "min";
 		public final static String MAX_INTENSITY = "max";
 		public final static String AURORA_LIST = "al";
-	};
+	}
 
 	private int dimensionId = 0;
 	private float intensity = 0.0F;
 	private float minIntensity = ModOptions.defaultMinRainStrength;
 	private float maxIntensity = ModOptions.defaultMaxRainStrength;
-	private final Set<AuroraData> auroras = new HashSet<AuroraData>();
+	private final Set<AuroraData> auroras = new HashSet<>();
 
 	public DimensionEffectData() {
 	}
@@ -103,7 +103,7 @@ public final class DimensionEffectData implements INBTSerialization {
 	}
 
 	public void randomizeRain() {
-		float result = 0.0F;
+		float result;
 		final float delta = this.maxIntensity - this.minIntensity;
 		if (delta <= 0.0F) {
 			result = this.minIntensity;
@@ -154,13 +154,11 @@ public final class DimensionEffectData implements INBTSerialization {
 	@Override
 	public String toString() {
 		// Dump out some diagnostics for the currentAurora dimension
-		final StringBuilder builder = new StringBuilder();
-		builder.append("dim ").append(this.dimensionId).append(": ");
-		builder.append("intensity: ").append(FORMATTER.format(this.intensity * 100));
-		builder.append(" [").append(FORMATTER.format(this.minIntensity * 100));
-		builder.append(",").append(FORMATTER.format(this.maxIntensity * 100));
-		builder.append("]");
-		builder.append(", auroras: ").append(this.auroras.size());
-		return builder.toString();
+        return "dim " + this.dimensionId + ": " +
+            "intensity: " + FORMATTER.format(this.intensity * 100) +
+            " [" + FORMATTER.format(this.minIntensity * 100) +
+            "," + FORMATTER.format(this.maxIntensity * 100) +
+            "]" +
+            ", auroras: " + this.auroras.size();
 	}
 }

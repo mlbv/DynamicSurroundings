@@ -31,5 +31,5 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public interface IVariator {
-	public void loadConfig(final ConfigProperty config);
+	void loadConfig(final ConfigProperty config);
 }

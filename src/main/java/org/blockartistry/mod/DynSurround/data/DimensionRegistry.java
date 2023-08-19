@@ -49,20 +49,20 @@ public final class DimensionRegistry implements Comparable<DimensionRegistry> {
 	private static final boolean CALENDAR_API = Loader.isModLoaded("CalendarAPI");
 	private static final String SEASON_NOT_AVAILABLE = "noseason";
 
-	private static final List<DimensionConfig.Entry> cache = new ArrayList<DimensionConfig.Entry>();
-	private static final TIntObjectHashMap<DimensionRegistry> dimensionData = new TIntObjectHashMap<DimensionRegistry>();
+	private static final List<DimensionConfig.Entry> cache = new ArrayList<>();
+	private static final TIntObjectHashMap<DimensionRegistry> dimensionData = new TIntObjectHashMap<>();
 	private static boolean isFlatWorld = false;
 
-	protected final int dimensionId;
-	protected boolean initialized;
-	protected String name = "<NOT SET>";
-	protected Integer seaLevel;
-	protected Integer skyHeight;
-	protected Integer cloudHeight;
-	protected Integer spaceHeight;
-	protected Boolean hasHaze;
-	protected Boolean hasAuroras;
-	protected Boolean hasWeather;
+	private final int dimensionId;
+	private boolean initialized;
+	private String name = "<NOT SET>";
+	private Integer seaLevel;
+	private Integer skyHeight;
+	private Integer cloudHeight;
+	private Integer spaceHeight;
+	private Boolean hasHaze;
+	private Boolean hasAuroras;
+	private Boolean hasWeather;
 
 	public static void initialize() {
 		try {
@@ -139,12 +139,12 @@ public final class DimensionRegistry implements Comparable<DimensionRegistry> {
 		}
 	}
 
-	protected DimensionRegistry(final World world) {
+	private DimensionRegistry(final World world) {
 		this.dimensionId = world.provider.dimensionId;
 		initialize(world.provider);
 	}
 
-	protected DimensionRegistry(final World world, final DimensionConfig.Entry entry) {
+	private DimensionRegistry(final World world, final DimensionConfig.Entry entry) {
 		this.dimensionId = world.provider.dimensionId;
 		this.name = world.provider.getDimensionName();
 		this.seaLevel = entry.seaLevel;
@@ -156,7 +156,7 @@ public final class DimensionRegistry implements Comparable<DimensionRegistry> {
 		initialize(world.provider);
 	}
 
-	protected DimensionRegistry initialize(final WorldProvider provider) {
+	private DimensionRegistry initialize(final WorldProvider provider) {
 		if (!this.initialized) {
 			this.name = provider.getDimensionName();
 			if (this.seaLevel == null)
@@ -174,7 +174,7 @@ public final class DimensionRegistry implements Comparable<DimensionRegistry> {
 			if (this.spaceHeight == null)
 				this.spaceHeight = this.skyHeight + SPACE_HEIGHT_OFFSET;
 			this.initialized = true;
-			ModLog.info("Dimension initialized " + toString());
+			ModLog.info("Dimension initialized " + this);
 		}
 		return this;
 	}
@@ -188,31 +188,31 @@ public final class DimensionRegistry implements Comparable<DimensionRegistry> {
 	}
 
 	public int getSeaLevel() {
-		return this.seaLevel.intValue();
+		return this.seaLevel;
 	}
 
 	public int getSkyHeight() {
-		return this.skyHeight.intValue();
+		return this.skyHeight;
 	}
 
 	public int getCloudHeight() {
-		return this.cloudHeight.intValue();
+		return this.cloudHeight;
 	}
 
 	public int getSpaceHeight() {
-		return this.spaceHeight.intValue();
+		return this.spaceHeight;
 	}
 
 	public boolean getHasHaze() {
-		return this.hasHaze.booleanValue();
+		return this.hasHaze;
 	}
 
 	public boolean getHasAuroras() {
-		return this.hasAuroras.booleanValue();
+		return this.hasAuroras;
 	}
 
 	public boolean getHasWeather() {
-		return this.hasWeather.booleanValue();
+		return this.hasWeather;
 	}
 
 	public String getSeason() {
@@ -310,15 +310,13 @@ public final class DimensionRegistry implements Comparable<DimensionRegistry> {
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append(this.dimensionId).append('/').append(this.name).append(':');
-		builder.append(" seaLevel:").append(this.seaLevel);
-		builder.append(" cloudH:").append(this.cloudHeight);
-		builder.append(" skyH:").append(this.skyHeight);
-		builder.append(" haze:").append(Boolean.toString(this.hasHaze));
-		builder.append(" aurora:").append(Boolean.toString(this.hasAuroras));
-		builder.append(" weather:").append(Boolean.toString(this.hasWeather));
-		return builder.toString();
+        return String.valueOf(this.dimensionId) + '/' + this.name + ':' +
+            " seaLevel:" + this.seaLevel +
+            " cloudH:" + this.cloudHeight +
+            " skyH:" + this.skyHeight +
+            " haze:" + this.hasHaze +
+            " aurora:" + this.hasAuroras +
+            " weather:" + this.hasWeather;
 	}
 
     @Override

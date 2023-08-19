@@ -90,7 +90,7 @@ public final class Node {
 		return y < 0.0 ? -angle : angle;
 	}
 */
-	
+
 	public void setDeltaZ(final float f) {
 		this.dZ = f;
 	}
@@ -104,8 +104,7 @@ public final class Node {
 	}
 
 	public float getModdedY() {
-		final float y = this.posY + this.dY;
-		return y < 0.0F ? 0.0F : y;
+		return Math.max(this.posY + this.dY, 0.0F);
 	}
 
 	public void setWidth(final float w) {

@@ -62,8 +62,7 @@ public class SoundInputStream extends InputStream {
 	public void close() {
 		try {
 			this.stream.close();
-		} catch (@Nonnull final Throwable t) {
-			;
+		} catch (@Nonnull final Throwable ignored) {
 		}
 	}
 

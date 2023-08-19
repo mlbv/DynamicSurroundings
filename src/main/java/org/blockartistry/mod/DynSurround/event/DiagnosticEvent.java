@@ -37,7 +37,7 @@ public class DiagnosticEvent extends Event {
 
 		public final World world;
 		public final EntityPlayer player;
-		public final List<String> output = new ArrayList<String>();
+		public final List<String> output = new ArrayList<>();
 
 		public Gather(final World world, final EntityPlayer player) {
 			super();

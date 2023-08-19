@@ -44,7 +44,7 @@ public final class AuroraEffectHandler implements IClientEffectHandler {
 
 	// Aurora information
 	private static int auroraDimension = 0;
-	private static final Set<AuroraData> auroras = new HashSet<AuroraData>();
+	private static final Set<AuroraData> auroras = new HashSet<>();
 	public static Aurora currentAurora;
 
 	public static void addAurora(final AuroraData data) {
@@ -98,7 +98,7 @@ public final class AuroraEffectHandler implements IClientEffectHandler {
 		if (ad == null) {
 			currentAurora = null;
 		} else if (currentAurora == null || (currentAurora.posX != ad.posX && currentAurora.posZ != ad.posZ)) {
-			ModLog.debug("New aurora: " + ad.toString());
+			ModLog.debug("New aurora: " + ad);
 			currentAurora = new Aurora(ad);
 		}
 

@@ -83,7 +83,7 @@ public class StormRenderer implements IAtmosRenderer {
 		Weather.setTextures();
 		final WorldClient world = renderer.mc.theWorld;
 
-		IRenderHandler r = null;
+		IRenderHandler r;
 		if ((r = world.provider.getWeatherRenderer()) != null) {
 			r.render(partialTicks, world, renderer.mc);
 			return;
@@ -150,11 +150,8 @@ public class StormRenderer implements IAtmosRenderer {
 					}
 
 					final float f8 = 1.0F;
-					int j2 = k1;
 
-					if (k1 < locY) {
-						j2 = locY;
-					}
+                    int j2 = Math.max(k1, locY);
 
 					if (l1 != i2) {
 						random.setSeed(locX * locX * 3121 + locX * 45238971 ^ locZ * locZ * 418711 + locZ * 13761);
@@ -184,13 +181,13 @@ public class StormRenderer implements IAtmosRenderer {
 
 							tessellator.setColorRGBA_F(1.0F, 1.0F, 1.0F,
 									((1.0F - dist * dist) * 0.5F + 0.5F) * alphaRatio);
-							tessellator.setTranslation(-spawnX * 1.0D, -spawnY * 1.0D, -spawnZ * 1.0D);
+							tessellator.setTranslation(-spawnX, -spawnY, -spawnZ);
 							tessellator.addVertexWithUV(locX - f6 + 0.5D, l1, locZ - f7 + 0.5D, 0.0F * f8,
 									l1 * f8 / 4.0F + f10 * f8);
-							tessellator.addVertexWithUV(locX + f6 + 0.5D, l1, locZ + f7 + 0.5D, 1.0F * f8,
-									l1 * f8 / 4.0F + f10 * f8);
-							tessellator.addVertexWithUV(locX + f6 + 0.5D, i2, locZ + f7 + 0.5D, 1.0F * f8,
-									i2 * f8 / 4.0F + f10 * f8);
+							tessellator.addVertexWithUV(locX + f6 + 0.5D, l1, locZ + f7 + 0.5D, f8,
+                                                        l1 * f8 / 4.0F + f10 * f8);
+							tessellator.addVertexWithUV(locX + f6 + 0.5D, i2, locZ + f7 + 0.5D, f8,
+                                                        i2 * f8 / 4.0F + f10 * f8);
 							tessellator.addVertexWithUV(locX - f6 + 0.5D, i2, locZ - f7 + 0.5D, 0.0F * f8,
 									i2 * f8 / 4.0F + f10 * f8);
 							tessellator.setTranslation(0.0D, 0.0D, 0.0D);
@@ -233,13 +230,13 @@ public class StormRenderer implements IAtmosRenderer {
 							}
 							tessellator.setColorRGBA_F(color.red, color.green, color.blue,
 									((1.0F - dist * dist) * 0.3F + 0.5F) * alphaRatio);
-							tessellator.setTranslation(-spawnX * 1.0D, -spawnY * 1.0D, -spawnZ * 1.0D);
+							tessellator.setTranslation(-spawnX, -spawnY, -spawnZ);
 							tessellator.addVertexWithUV(locX - f6 + 0.5D, l1, locZ - f7 + 0.5D, 0.0F * f8 + f16,
 									l1 * f8 / 4.0F + f10 * f8 + f11);
-							tessellator.addVertexWithUV(locX + f6 + 0.5D, l1, locZ + f7 + 0.5D, 1.0F * f8 + f16,
-									l1 * f8 / 4.0F + f10 * f8 + f11);
-							tessellator.addVertexWithUV(locX + f6 + 0.5D, i2, locZ + f7 + 0.5D, 1.0F * f8 + f16,
-									i2 * f8 / 4.0F + f10 * f8 + f11);
+							tessellator.addVertexWithUV(locX + f6 + 0.5D, l1, locZ + f7 + 0.5D, f8 + f16,
+                                                        l1 * f8 / 4.0F + f10 * f8 + f11);
+							tessellator.addVertexWithUV(locX + f6 + 0.5D, i2, locZ + f7 + 0.5D, f8 + f16,
+                                                        i2 * f8 / 4.0F + f10 * f8 + f11);
 							tessellator.addVertexWithUV(locX - f6 + 0.5D, i2, locZ - f7 + 0.5D, 0.0F * f8 + f16,
 									i2 * f8 / 4.0F + f10 * f8 + f11);
 							tessellator.setTranslation(0.0D, 0.0D, 0.0D);

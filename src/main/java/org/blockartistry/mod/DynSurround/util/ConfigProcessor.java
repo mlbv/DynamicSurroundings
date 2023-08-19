@@ -40,7 +40,7 @@ public final class ConfigProcessor {
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target({ ElementType.FIELD })
-	public static @interface Parameter {
+	public @interface Parameter {
 		String category();
 
 		String property();
@@ -50,13 +50,13 @@ public final class ConfigProcessor {
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target({ ElementType.FIELD })
-	public static @interface Comment {
+	public @interface Comment {
 		String value() default "";
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target({ ElementType.FIELD })
-	public static @interface MinMaxInt {
+	public @interface MinMaxInt {
 		int min() default Integer.MIN_VALUE;
 
 		int max() default Integer.MAX_VALUE;
@@ -64,7 +64,7 @@ public final class ConfigProcessor {
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target({ ElementType.FIELD })
-	public static @interface MinMaxFloat {
+	public @interface MinMaxFloat {
 		float min() default Float.MIN_VALUE;
 
 		float max() default Float.MAX_VALUE;
@@ -72,7 +72,7 @@ public final class ConfigProcessor {
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target({ ElementType.FIELD })
-	public static @interface RestartRequired {
+	public @interface RestartRequired {
 		boolean world() default true;
 
 		boolean server() default true;
@@ -80,7 +80,7 @@ public final class ConfigProcessor {
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target({ ElementType.FIELD })
-	public static @interface Hidden {
+	public @interface Hidden {
 
 	}
 

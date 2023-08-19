@@ -39,5 +39,5 @@ public interface IGenerator {
 	/**
 	 * Generate footsteps sounds of the Entity.
 	 */
-	public void generateFootsteps(final EntityPlayer ply);
+    void generateFootsteps(final EntityPlayer ply);
 }

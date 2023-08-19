@@ -42,11 +42,11 @@ public final class GuiHUDHandler {
 	private GuiHUDHandler() {
 	}
 
-	public static interface IGuiOverlay {
+	public interface IGuiOverlay {
 		void doRender(final RenderGameOverlayEvent event);
 	}
 
-	private static final List<IGuiOverlay> overlays = new ArrayList<IGuiOverlay>();
+	private static final List<IGuiOverlay> overlays = new ArrayList<>();
 
 	public static void register(final IGuiOverlay overlay) {
 		overlays.add(overlay);

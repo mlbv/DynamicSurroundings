@@ -108,7 +108,7 @@ public final class ForgeDictionary {
 
 	private static final String[] marbleBlocks = { "blockQuartz", "marble", "stoneMarble", "blockMarble" };
 
-	private static final Map<String, String[]> dictionaryMaps = new HashMap<String, String[]>();
+	private static final Map<String, String[]> dictionaryMaps = new HashMap<>();
 
 	static {
 		dictionaryMaps.put("ore", oreBlocks);

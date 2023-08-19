@@ -45,7 +45,7 @@ public class EntityTextPopOffFX extends EntityFX {
 	protected static final int LIFESPAN = 12;
 	protected static final double BOUNCE_STRENGTH = 1.5F;
 
-	protected Color renderColor = Color.WHITE;
+	protected Color renderColor;
 	protected String text;
 	protected boolean shouldOnTop = false;
 	protected boolean grow = true;

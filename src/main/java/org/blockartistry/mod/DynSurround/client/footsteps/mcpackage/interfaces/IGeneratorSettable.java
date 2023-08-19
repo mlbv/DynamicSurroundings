@@ -29,5 +29,5 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public interface IGeneratorSettable {
-	public void setGenerator(final IGenerator generator);
+	void setGenerator(final IGenerator generator);
 }

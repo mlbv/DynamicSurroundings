@@ -42,7 +42,7 @@ public final class AuroraPreset {
 	public final float nodeWidth;
 	public final int bandOffset;
 
-	private static final List<AuroraPreset> PRESET = new ArrayList<AuroraPreset>();
+	private static final List<AuroraPreset> PRESET = new ArrayList<>();
 
 	static {
 		// 10/5; 90/45

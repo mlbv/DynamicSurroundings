@@ -84,7 +84,7 @@ public final class ServerEffectHandler {
 	private static boolean isAuroraInRange(final EntityPlayerMP player, final Set<AuroraData> data) {
 		for (final AuroraData aurora : data) {
 			final long deltaX = aurora.posX - (int) player.posX;
-			final long deltaZ = aurora.posZ - (int) player.posZ + -ModOptions.auroraSpawnOffset;
+			final long deltaZ = aurora.posZ - (int) player.posZ - ModOptions.auroraSpawnOffset;
 			final long distSq = deltaX * deltaX + deltaZ * deltaZ;
 			if (distSq <= MIN_AURORA_DISTANCE_SQ)
 				return true;
@@ -104,7 +104,7 @@ public final class ServerEffectHandler {
 	private static final int CHECK_INTERVAL = 100; // Ticks
 	private static TIntIntHashMap tickCounters = new TIntIntHashMap();
 
-	protected void processAuroras(final TickEvent.WorldTickEvent event) {
+	private void processAuroras(final TickEvent.WorldTickEvent event) {
 
 		final World world = event.world;
 		if (world == null || !DimensionRegistry.hasAuroras(world))
@@ -122,7 +122,6 @@ public final class ServerEffectHandler {
 			if (tickCount % CHECK_INTERVAL == 0) {
 				if (okToSpawnAurora(world)) {
 
-					@SuppressWarnings("unchecked")
 					final List<EntityPlayerMP> players = MinecraftServer.getServer()
 							.getConfigurationManager().playerEntityList;
 
@@ -139,7 +138,7 @@ public final class ServerEffectHandler {
 						final AuroraData aurora = new AuroraData(player, -ModOptions.auroraSpawnOffset, colorSet,
 								preset);
 						if (data.add(aurora)) {
-							ModLog.debug("Spawned new aurora: " + aurora.toString());
+							ModLog.debug("Spawned new aurora: " + aurora);
 						}
 					}
 				}

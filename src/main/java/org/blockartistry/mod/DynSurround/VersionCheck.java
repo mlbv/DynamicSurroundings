@@ -47,7 +47,7 @@ public final class VersionCheck implements Runnable {
 	private static final int VERSION_CHECK_RETRIES = 3;
 	private static final int VERSION_CHECK_INTERVAL = 10000;
 
-	public static enum UpdateStatus {
+	public enum UpdateStatus {
 		UNKNOWN, CURRENT, OUTDATED, COMM_ERROR
 	}
 
@@ -230,24 +230,16 @@ public final class VersionCheck implements Runnable {
 			e.printStackTrace();
 		}
 
-		switch (status) {
-		case COMM_ERROR:
-			ModLog.warn("Version check failed");
-			break;
-		case CURRENT:
-			ModLog.info("Dynamic Surroundings version [%s] is the same or newer than the current version [%s]",
-					modVersion, currentVersion);
-			break;
-		case OUTDATED:
-			ModLog.warn("Using outdated version [" + modVersion + "] for Minecraft " + mcVersion
-					+ ". Consider updating to " + currentVersion + ".");
-			break;
-		case UNKNOWN:
-			ModLog.warn("Unknown version check status!");
-			break;
-		default:
-			break;
-
-		}
+        switch (status) {
+            case COMM_ERROR -> ModLog.warn("Version check failed");
+            case CURRENT ->
+                ModLog.info("Dynamic Surroundings version [%s] is the same or newer than the current version [%s]",
+                            modVersion, currentVersion);
+            case OUTDATED -> ModLog.warn("Using outdated version [" + modVersion + "] for Minecraft " + mcVersion
+                                             + ". Consider updating to " + currentVersion + ".");
+            case UNKNOWN -> ModLog.warn("Unknown version check status!");
+            default -> {
+            }
+        }
 	}
 }

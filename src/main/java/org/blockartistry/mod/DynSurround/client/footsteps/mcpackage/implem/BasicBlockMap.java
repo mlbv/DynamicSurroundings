@@ -49,9 +49,9 @@ public class BasicBlockMap implements IBlockMap {
 	private static final Pattern pattern = Pattern.compile("([^:]+:[^^+]+)\\^?(\\d+)?\\+?(\\w+)?");
 
 	private final BlockInfoMutable mutable = new BlockInfoMutable();
-	private final Map<BlockInfo, String> metaMap = new HashMap<BlockInfo, String>();
-	private final Map<Substrate, Map<BlockInfo, String>> substrateMap = new EnumMap<Substrate, Map<BlockInfo, String>>(
-			Substrate.class);
+	private final Map<BlockInfo, String> metaMap = new HashMap<>();
+	private final Map<Substrate, Map<BlockInfo, String>> substrateMap = new EnumMap<>(
+        Substrate.class);
 
 	private static class MacroEntry {
 		public final int meta;
@@ -69,17 +69,17 @@ public class BasicBlockMap implements IBlockMap {
 		}
 	}
 
-	private static final Map<String, List<MacroEntry>> macros = new LinkedHashMap<String, List<MacroEntry>>();
+	private static final Map<String, List<MacroEntry>> macros = new LinkedHashMap<>();
 
 	static {
-		List<MacroEntry> entries = new ArrayList<MacroEntry>();
+		List<MacroEntry> entries = new ArrayList<>();
 		entries.add(new MacroEntry(null, "NOT_EMITTER"));
 		entries.add(new MacroEntry("messy", "MESSY_GROUND"));
 		entries.add(new MacroEntry("foliage", "straw"));
 		macros.put("#sapling", entries);
 		macros.put("#reed", entries);
 
-		entries = new ArrayList<MacroEntry>();
+		entries = new ArrayList<>();
 		entries.add(new MacroEntry(null, "NOT_EMITTER"));
 		entries.add(new MacroEntry("messy", "MESSY_GROUND"));
 		entries.add(new MacroEntry(0, "foliage", "NOT_EMITTER"));
@@ -92,7 +92,7 @@ public class BasicBlockMap implements IBlockMap {
 		entries.add(new MacroEntry(7, "foliage", "straw"));
 		macros.put("#wheat", entries);
 
-		entries = new ArrayList<MacroEntry>();
+		entries = new ArrayList<>();
 		entries.add(new MacroEntry(null, "NOT_EMITTER"));
 		entries.add(new MacroEntry("messy", "MESSY_GROUND"));
 		entries.add(new MacroEntry(0, "foliage", "NOT_EMITTER"));
@@ -105,7 +105,7 @@ public class BasicBlockMap implements IBlockMap {
 		entries.add(new MacroEntry(7, "foliage", "brush"));
 		macros.put("#crop", entries);
 
-		entries = new ArrayList<MacroEntry>();
+		entries = new ArrayList<>();
 		entries.add(new MacroEntry("bigger", "bluntwood"));
 		macros.put("#fence", entries);
 	}
@@ -143,10 +143,8 @@ public class BasicBlockMap implements IBlockMap {
 			this.metaMap.put(info, value);
 		} else {
 			final Substrate s = Substrate.get(substrate);
-			Map<BlockInfo, String> sub = this.substrateMap.get(s);
-			if (sub == null)
-				this.substrateMap.put(s, sub = new HashMap<BlockInfo, String>());
-			sub.put(info, value);
+            Map<BlockInfo, String> sub = this.substrateMap.computeIfAbsent(s, k -> new HashMap<>());
+            sub.put(info, value);
 		}
 	}
 
