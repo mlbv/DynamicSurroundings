@@ -45,7 +45,7 @@ public class Module {
 	public static final String MOD_ID = "@MODID@";
 	public static final String MOD_NAME = "@MODNAME@";
 	public static final String VERSION = "@VERSION@";
-	public static final String DEPENDENCIES = "required-after:Forge@[10.13.4.1614,)";
+	public static final String DEPENDENCIES = "required-after:Forge@[10.13.4.1614,);required-after:gtnhmixins@[2.0.0,)";
 	public static final String GUI_FACTORY = "org.blockartistry.mod.DynSurround.client.gui.ConfigGuiFactory";
 
 	@Instance(MOD_ID)

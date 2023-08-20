@@ -50,20 +50,20 @@ public final class RenderWeather {
 		register(new AuroraRenderer());
 	}
 
-	/*
+	/**
 	 * Render rain particles.
 	 *
 	 * Redirect from EntityRenderer.
-	 */
+	 **/
 	public static void addRainParticles(final EntityRenderer theThis) {
 		StormSplashRenderer.renderStormSplashes(EnvironState.getDimensionId(), theThis);
 	}
 
-	/*
+	/**
 	 * Render atmospheric effects.
 	 *
 	 * Redirect from EntityRenderer.
-	 */
+	 **/
 	public static void renderRainSnow(final EntityRenderer theThis, final float partialTicks) {
 		for (final IAtmosRenderer renderer : renderList)
 			renderer.render(theThis, partialTicks);
