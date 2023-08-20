@@ -27,6 +27,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import lotr.common.LOTRDate;
 import org.blockartistry.mod.DynSurround.ModLog;
 import org.blockartistry.mod.DynSurround.ModOptions;
 import org.blockartistry.mod.DynSurround.Module;
@@ -47,6 +48,8 @@ public final class DimensionRegistry implements Comparable<DimensionRegistry> {
 
 	private static final int SPACE_HEIGHT_OFFSET = 32;
 	private static final boolean CALENDAR_API = Loader.isModLoaded("CalendarAPI");
+    //Lotr has its own date system
+    private static final boolean LOTR = Loader.isModLoaded("lotr");
 	private static final String SEASON_NOT_AVAILABLE = "noseason";
 
 	private static final List<DimensionConfig.Entry> cache = new ArrayList<>();
@@ -216,8 +219,13 @@ public final class DimensionRegistry implements Comparable<DimensionRegistry> {
 	}
 
 	public String getSeason() {
-		if (!CALENDAR_API)
-			return SEASON_NOT_AVAILABLE;
+        //TODO: lotr shire reckoning -> CalenderAPI bridge in MistLotrTweaks
+        if (LOTR && this.name.equals("MiddleEarth")) {
+            return LOTRDate.ShireReckoning.getSeason().name();
+        }
+        if (!CALENDAR_API) {
+            return SEASON_NOT_AVAILABLE;
+        }
 
 		final ISeasonProvider provider = CalendarAPI.getSeasonProvider(this.dimensionId);
 		if (provider == null)

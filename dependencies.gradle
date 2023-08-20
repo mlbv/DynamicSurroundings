@@ -1,8 +1,10 @@
 dependencies {
-    api deobf('https://media.forgecdn.net/files/2230/518/Waila-1.5.10_1.7.10.jar')
-
+    api rfg.deobf('curse.maven:waila-73488:2230518')
     api files('libs/Calendar-1.7.10-1.0-9-deobf.jar')
-
-    runtimeOnlyNonPublishable deobf('https://media.forgecdn.net/files/4091/561/LOTRMod+v36.15.jar')
+    //Required for Date fallback/compatability
+    implementation rfg.deobf('curse.maven:lotr-423748:4091561')
+    //Various tweaks including j17 & weather2 compat
+    runtimeOnlyNonPublishable deobf('https://github.com/mist475/MistLotrTweaks/releases/download/1.4.0.0/mistlotrtweaks-1.4.0.0.jar')
+    //Haven't figured out how to get the noMixin jar via mr maven and jitpack is unstable :(
     //runtimeOnlyNonPublishable deobf('https://github.com/Roadhog360/Et-Futurum-Requiem/releases/download/2.4.5/Et_Futurum_Requiem-2.4.5+nomixin.jar')
 }
