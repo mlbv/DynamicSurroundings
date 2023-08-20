@@ -48,7 +48,7 @@ public class JsonUtils {
             if (stream != null)
                 return load(stream, clazz);
         }
-		return clazz.newInstance();
+		return clazz.getDeclaredConstructor().newInstance();
 	}
 
 	public static <T> T load(final InputStream stream, final Class<T> clazz) {

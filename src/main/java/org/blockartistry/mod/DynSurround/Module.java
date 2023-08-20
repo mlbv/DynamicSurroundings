@@ -40,6 +40,7 @@ import org.blockartistry.mod.DynSurround.compat.NoLotrProxy;
 import org.blockartistry.mod.DynSurround.proxy.Proxy;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 @Mod(modid = Module.MOD_ID, useMetadata = true, dependencies = Module.DEPENDENCIES, version = Module.VERSION, guiFactory = Module.GUI_FACTORY)
 public class Module {
@@ -49,7 +50,7 @@ public class Module {
 	public static final String DEPENDENCIES = "required-after:Forge@[10.13.4.1614,);required-after:gtnhmixins@[2.0.0,)";
 	public static final String GUI_FACTORY = "org.blockartistry.mod.DynSurround.client.gui.ConfigGuiFactory";
 
-    public static final String LOTR_PROXY_LOCATION = "org.blockartistry.mod.DynSurround.compat.ILotrProxy";
+    public static final String LOTR_PROXY_LOCATION = "org.blockartistry.mod.DynSurround.compat.LotrProxy";
 
     public static ILOTRProxy LOTR_PROXY;
 
@@ -112,9 +113,10 @@ public class Module {
 		proxy.postInit(event);
         if (Proxy.LOTR) {
             try {
-                LOTR_PROXY = Class.forName(LOTR_PROXY_LOCATION).asSubclass(ILOTRProxy.class).newInstance();
+                LOTR_PROXY = Class.forName(LOTR_PROXY_LOCATION).asSubclass(ILOTRProxy.class).getDeclaredConstructor().newInstance();
             }
-            catch (ClassNotFoundException | InstantiationException | IllegalAccessException ignored) {
+            catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException |
+                   InvocationTargetException ignored) {
                 LOTR_PROXY = new NoLotrProxy();
             }
         } else {
