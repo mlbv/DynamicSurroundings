@@ -23,17 +23,6 @@
 
 package org.blockartistry.mod.DynSurround.data;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import lotr.common.LOTRDate;
-import org.blockartistry.mod.DynSurround.ModLog;
-import org.blockartistry.mod.DynSurround.ModOptions;
-import org.blockartistry.mod.DynSurround.Module;
-import org.blockartistry.mod.DynSurround.data.config.DimensionConfig;
-import org.blockartistry.mod.DynSurround.util.DiurnalUtils;
-
 import cpw.mods.fml.common.Loader;
 import foxie.calendar.api.CalendarAPI;
 import foxie.calendar.api.ICalendarProvider;
@@ -43,13 +32,21 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldType;
 import net.minecraftforge.common.DimensionManager;
+import org.blockartistry.mod.DynSurround.ModLog;
+import org.blockartistry.mod.DynSurround.ModOptions;
+import org.blockartistry.mod.DynSurround.Module;
+import org.blockartistry.mod.DynSurround.data.config.DimensionConfig;
+import org.blockartistry.mod.DynSurround.proxy.Proxy;
+import org.blockartistry.mod.DynSurround.util.DiurnalUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class DimensionRegistry implements Comparable<DimensionRegistry> {
 
 	private static final int SPACE_HEIGHT_OFFSET = 32;
 	private static final boolean CALENDAR_API = Loader.isModLoaded("CalendarAPI");
-    //Lotr has its own date system
-    private static final boolean LOTR = Loader.isModLoaded("lotr");
 	private static final String SEASON_NOT_AVAILABLE = "noseason";
 
 	private static final List<DimensionConfig.Entry> cache = new ArrayList<>();
@@ -220,8 +217,8 @@ public final class DimensionRegistry implements Comparable<DimensionRegistry> {
 
 	public String getSeason() {
         //TODO: lotr shire reckoning -> CalenderAPI bridge in MistLotrTweaks
-        if (LOTR && this.name.equals("MiddleEarth")) {
-            return LOTRDate.ShireReckoning.getSeason().name();
+        if (Proxy.LOTR && this.name.equals("MiddleEarth")) {
+            return Module.LOTR_PROXY.getSeason();
         }
         if (!CALENDAR_API) {
             return SEASON_NOT_AVAILABLE;

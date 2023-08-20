@@ -24,11 +24,6 @@
 
 package org.blockartistry.mod.DynSurround;
 
-import java.io.File;
-
-import org.apache.logging.log4j.LogManager;
-import org.blockartistry.mod.DynSurround.proxy.Proxy;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -39,6 +34,12 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.common.config.Configuration;
+import org.apache.logging.log4j.LogManager;
+import org.blockartistry.mod.DynSurround.compat.ILOTRProxy;
+import org.blockartistry.mod.DynSurround.compat.NoLotrProxy;
+import org.blockartistry.mod.DynSurround.proxy.Proxy;
+
+import java.io.File;
 
 @Mod(modid = Module.MOD_ID, useMetadata = true, dependencies = Module.DEPENDENCIES, version = Module.VERSION, guiFactory = Module.GUI_FACTORY)
 public class Module {
@@ -47,6 +48,10 @@ public class Module {
 	public static final String VERSION = "@VERSION@";
 	public static final String DEPENDENCIES = "required-after:Forge@[10.13.4.1614,);required-after:gtnhmixins@[2.0.0,)";
 	public static final String GUI_FACTORY = "org.blockartistry.mod.DynSurround.client.gui.ConfigGuiFactory";
+
+    public static final String LOTR_PROXY_LOCATION = "org.blockartistry.mod.DynSurround.compat.ILotrProxy";
+
+    public static ILOTRProxy LOTR_PROXY;
 
 	@Instance(MOD_ID)
 	protected static Module instance;
@@ -105,6 +110,16 @@ public class Module {
 	@EventHandler
 	public void postInit(final FMLPostInitializationEvent event) {
 		proxy.postInit(event);
+        if (Proxy.LOTR) {
+            try {
+                LOTR_PROXY = Class.forName(LOTR_PROXY_LOCATION).asSubclass(ILOTRProxy.class).newInstance();
+            }
+            catch (ClassNotFoundException | InstantiationException | IllegalAccessException ignored) {
+                LOTR_PROXY = new NoLotrProxy();
+            }
+        } else {
+            LOTR_PROXY = new NoLotrProxy();
+        }
 		config.save();
 	}
 
