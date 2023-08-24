@@ -129,7 +129,7 @@ public class SoundManager {
 		return currentSoundCount() < (SoundSystemConfig.getNumberNormalChannels() - SOUND_QUEUE_SLACK);
 	}
 
-	// ASM hook for SoundManager::playSound
+	// Mixin hook for SoundManager::playSound
 	public static void flushSound() {
 		final SoundHandler h = Minecraft.getMinecraft().getSoundHandler();
 		((SoundSystem) h.sndManager.sndSystem).CommandQueue(null);
@@ -196,7 +196,7 @@ public class SoundManager {
 				: 1.0F;
 	}
 
-	// Redirect via ASM
+	// Redirect via Mixin
 	public static float getNormalizedVolume(final ISound sound, final SoundPoolEntry poolEntry,
 			final SoundCategory category) {
 		float result = 0.0F;
@@ -222,7 +222,7 @@ public class SoundManager {
 		return result;
 	}
 
-	// Redirect via ASM
+	// Redirect via Mixin
 	public static float getNormalizedPitch(final ISound sound, final SoundPoolEntry poolEntry) {
 		float result = 0F;
 		if (sound == null) {

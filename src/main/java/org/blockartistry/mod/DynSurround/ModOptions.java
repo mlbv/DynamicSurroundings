@@ -80,7 +80,7 @@ public final class ModOptions {
 	@Comment("Factor to apply to rain sound level to adjust")
 	public static float soundLevel = 1.0F;
 	@Parameter(category = CATEGORY_RAIN, property = CONFIG_DISABLE_WEATHER_EFFECTS, defaultValue = "false")
-	@Comment("Disable ASM related to weather effects")
+	@Comment("Disable Mixins related to weather effects")
 	@RestartRequired
 	public static boolean disableWeatherEffects = false;
 	@Parameter(category = CATEGORY_RAIN, property = CONFIG_RAIN_PARTICLE_BASE, defaultValue = "100")
