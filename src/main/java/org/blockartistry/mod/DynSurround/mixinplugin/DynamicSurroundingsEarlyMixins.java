@@ -3,9 +3,11 @@ package org.blockartistry.mod.DynSurround.mixinplugin;
 import com.gtnewhorizon.gtnhmixins.IEarlyMixinLoader;
 import cpw.mods.fml.relauncher.FMLLaunchHandler;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.config.Configuration;
 import org.blockartistry.mod.DynSurround.ModLog;
 import org.blockartistry.mod.DynSurround.ModOptions;
+import org.blockartistry.mod.DynSurround.Module;
 import org.blockartistry.mod.DynSurround.asm.Transformer;
 
 import java.io.File;
@@ -30,6 +32,10 @@ public class DynamicSurroundingsEarlyMixins implements IFMLLoadingPlugin, IEarly
 
     @Override
     public List<String> getMixins(Set<String> loadedCoreMods) {
+        String configFolder = "config" + File.separator + Module.MOD_ID + File.separator;
+        final Configuration config = new Configuration(new File(Launch.minecraftHome, configFolder + "dsurround.cfg"));
+        ModOptions.load(config);
+
         ModLog.info("Kicking off Dynamic Surroundings early mixins.");
         boolean client = FMLLaunchHandler.side().isClient();
         List<String> mixins = new ArrayList<>();
@@ -71,10 +77,6 @@ public class DynamicSurroundingsEarlyMixins implements IFMLLoadingPlugin, IEarly
 
     @Override
     public void injectData(Map<String, Object> map) {
-        // Tickle the configuration so we can get some options initialized
-        final File configFile = new File((File) map.get("mcLocation"), "/config/dsurround/dsurround.cfg");
-        final Configuration config = new Configuration(configFile);
-        ModOptions.load(config);
     }
 
     @Override
