@@ -217,7 +217,7 @@ public final class DimensionRegistry implements Comparable<DimensionRegistry> {
 
 	public String getSeason() {
         //TODO: lotr shire reckoning -> CalenderAPI bridge in MistLotrTweaks
-        if (Proxy.LOTR && this.name.equals("MiddleEarth")) {
+        if (Module.LOTR && this.name.equals("MiddleEarth")) {
             return Module.LOTR_PROXY.getSeason();
         }
         if (!CALENDAR_API) {

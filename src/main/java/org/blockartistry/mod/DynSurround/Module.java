@@ -25,6 +25,7 @@
 package org.blockartistry.mod.DynSurround;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -53,6 +54,7 @@ public class Module {
     public static final String LOTR_PROXY_LOCATION = "org.blockartistry.mod.DynSurround.compat.LotrProxy";
 
     public static ILOTRProxy LOTR_PROXY;
+    public static boolean LOTR;
 
 	@Instance(MOD_ID)
 	protected static Module instance;
@@ -110,18 +112,19 @@ public class Module {
 
 	@EventHandler
 	public void postInit(final FMLPostInitializationEvent event) {
-		proxy.postInit(event);
-        if (Proxy.LOTR) {
+        LOTR = Loader.isModLoaded("lotr");
+        if (LOTR) {
             try {
                 LOTR_PROXY = Class.forName(LOTR_PROXY_LOCATION).asSubclass(ILOTRProxy.class).getDeclaredConstructor().newInstance();
             }
             catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException |
                    InvocationTargetException ignored) {
-                LOTR_PROXY = new NoLotrProxy();
             }
-        } else {
+        }
+        if (LOTR_PROXY == null) {
             LOTR_PROXY = new NoLotrProxy();
         }
+        proxy.postInit(event);
 		config.save();
 	}
 

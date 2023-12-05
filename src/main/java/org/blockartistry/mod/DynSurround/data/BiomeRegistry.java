@@ -36,7 +36,6 @@ import org.blockartistry.mod.DynSurround.client.sound.SoundEffect.SoundType;
 import org.blockartistry.mod.DynSurround.data.config.BiomeConfig;
 import org.blockartistry.mod.DynSurround.data.config.SoundConfig;
 import org.blockartistry.mod.DynSurround.event.RegistryReloadEvent;
-import org.blockartistry.mod.DynSurround.proxy.Proxy;
 import org.blockartistry.mod.DynSurround.util.Color;
 import org.blockartistry.mod.DynSurround.util.MyUtils;
 
@@ -50,7 +49,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 public final class BiomeRegistry {
-    private static final Map<String,Entry> registry = new HashMap<>();
+    public static final Map<String, BiomeRegistryEntry> registry = new HashMap<>();
 	private static final Map<String, String> biomeAliases = new HashMap<>();
 
 	public static final BiomeGenBase UNDERGROUND = new FakeBiome(-1, "Underground");
@@ -68,7 +67,7 @@ public final class BiomeRegistry {
 	// and should default to something to avoid crap.
 	private static final BiomeGenBase WTF = new FakeBiome(-256, "(FooBar)");
 
-	private static class Entry implements Comparable<Entry> {
+	public static class BiomeRegistryEntry implements Comparable<BiomeRegistryEntry> {
 
 		private static Class<?> bopBiome;
 		private static Field bopBiomeFogDensity;
@@ -101,7 +100,7 @@ public final class BiomeRegistry {
 		public int spotSoundChance;
 		public List<SoundEffect> spotSounds;
 
-		public Entry(final BiomeGenBase biome) {
+		public BiomeRegistryEntry(final BiomeGenBase biome) {
 			this.biome = biome;
 			this.hasPrecipitation = biome.canSpawnLightningBolt() || biome.getEnableSnow();
 			this.sounds = new ArrayList<>();
@@ -177,7 +176,7 @@ public final class BiomeRegistry {
 		}
 
         @Override
-        public int compareTo(Entry e) {
+        public int compareTo(BiomeRegistryEntry e) {
             return this.biome.biomeName.compareToIgnoreCase(e.biome.biomeName);
         }
     }
@@ -202,24 +201,22 @@ public final class BiomeRegistry {
 
 			registry.clear();
 
-            if (Proxy.LOTR) {
-                registerLOTRBiomes();
-            }
+            Module.LOTR_PROXY.registerLOTRBiomes();
             for (BiomeGenBase biomeGenBase : BiomeGenBase.getBiomeGenArray()) {
                 if (biomeGenBase != null) {
-                    registry.put(biomeGenBase.biomeName, new Entry(biomeGenBase));
+                    registry.put(biomeGenBase.biomeName, new BiomeRegistryEntry(biomeGenBase));
                 }
             }
 			// Add our fake biomes
-			registry.put(UNDERGROUND.biomeName, new Entry(UNDERGROUND));
-			registry.put(UNDERWATER.biomeName, new Entry(UNDERWATER));
-			registry.put(UNDEROCEAN.biomeName, new Entry(UNDEROCEAN));
-			registry.put(UNDERDEEPOCEAN.biomeName, new Entry(UNDERDEEPOCEAN));
-			registry.put(UNDERRIVER.biomeName, new Entry(UNDERRIVER));
-			registry.put(OUTERSPACE.biomeName, new Entry(OUTERSPACE));
-			registry.put(CLOUDS.biomeName, new Entry(CLOUDS));
-			registry.put(PLAYER.biomeName, new Entry(PLAYER));
-			registry.put(WTF.biomeName, new Entry(WTF));
+			registry.put(UNDERGROUND.biomeName, new BiomeRegistryEntry(UNDERGROUND));
+			registry.put(UNDERWATER.biomeName, new BiomeRegistryEntry(UNDERWATER));
+			registry.put(UNDEROCEAN.biomeName, new BiomeRegistryEntry(UNDEROCEAN));
+			registry.put(UNDERDEEPOCEAN.biomeName, new BiomeRegistryEntry(UNDERDEEPOCEAN));
+			registry.put(UNDERRIVER.biomeName, new BiomeRegistryEntry(UNDERRIVER));
+			registry.put(OUTERSPACE.biomeName, new BiomeRegistryEntry(OUTERSPACE));
+			registry.put(CLOUDS.biomeName, new BiomeRegistryEntry(CLOUDS));
+			registry.put(PLAYER.biomeName, new BiomeRegistryEntry(PLAYER));
+			registry.put(WTF.biomeName, new BiomeRegistryEntry(WTF));
 
 			processConfig();
 
@@ -240,33 +237,16 @@ public final class BiomeRegistry {
 		MinecraftForge.EVENT_BUS.post(new RegistryReloadEvent.Biome());
 	}
 
-    private static void registerLOTRBiomes() {
-        try {
-            Class<?> lotrBiome = Class.forName("lotr.common.world.biome.LOTRBiome");
-            Field[] declaredFields = lotrBiome.getDeclaredFields();
-            for (Field field : declaredFields) {
-                if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
-                    field.setAccessible(true);
-                    if (field.get(null) instanceof BiomeGenBase biome) {
-                        registry.put(biome.biomeName, new Entry(biome));
-                    }
-                }
-            }
-        }
-        catch (ClassNotFoundException| IllegalAccessException ignored) {
-        }
-    }
-
-	private static Entry get(final BiomeGenBase biome) {
+	private static BiomeRegistryEntry get(final BiomeGenBase biome) {
 		synchronized (registry) {
-			Entry entry = registry.get(biome == null ? WTF.biomeName : biome.biomeName);
+			BiomeRegistryEntry entry = registry.get(biome == null ? WTF.biomeName : biome.biomeName);
 			if (entry == null) {
 				ModLog.warn("Biome [%s] was not detected during initial scan! Reloading config...", resolveName(biome));
 				initialize();
 				entry = registry.get(biome.biomeName);
 				if (entry == null) {
 					ModLog.warn("Still can't find biome [%s]! Explicitly adding at defaults", resolveName(biome));
-					entry = new Entry(biome);
+					entry = new BiomeRegistryEntry(biome);
 					registry.put(biome.biomeName, entry);
 				}
 			}
@@ -311,7 +291,7 @@ public final class BiomeRegistry {
 	}
 
 	public static SoundEffect getSpotSound(final BiomeGenBase biome, final String conditions, final Random random) {
-		final Entry e = get(biome);
+		final BiomeRegistryEntry e = get(biome);
 		if (e.spotSounds.isEmpty() || random.nextInt(e.spotSoundChance) != 0)
 			return null;
 
@@ -371,7 +351,7 @@ public final class BiomeRegistry {
 
 	private static void process(final BiomeConfig config) {
 		for (final BiomeConfig.Entry entry : config.entries) {
-			for (final Entry biomeEntry : registry.values()) {
+			for (final BiomeRegistryEntry biomeEntry : registry.values()) {
 				if (isBiomeMatch(entry, resolveName(biomeEntry.biome))) {
 					if (entry.hasPrecipitation != null)
 						biomeEntry.hasPrecipitation = entry.hasPrecipitation;
