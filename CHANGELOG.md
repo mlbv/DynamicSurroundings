@@ -1,3 +1,11 @@
+### DynamicSurroundings-1.7.10-1.0.7.3
+**What's New**
+* Basic configuration for lotr blocks:
+  * Move all but one asm transformer to mixins
+  * Cleanup code with generics injection & newer java syntax via Jabel
+  * Added lotr season detection to dimension registry (previously only CalenderAPI was supported, I don't think anything uses seasons by default atm but might turn out useful at some point)
+  * Move lotr biome detection to much less hacky approach
+
 ### DynamicSurroundings-1.7.10-1.0.7.2
 **What's New**
 * Basic configuration for lotr blocks:
@@ -17,7 +25,7 @@
 * Fix lotr biomes returning the wrong sounds due to duplicate biome ids
 
 **Changes**
-* BiomeRegistry know uses biome names instead of biome id's as key.
+* BiomeRegistry now uses biome names instead of biome id's as key.
 This is less performant but more compatible as I expect lotr isn't the only mod with duplicate biomes ids from vanilla
 
 ### DynamicSurroundings-1.7.10-1.0.6.5
