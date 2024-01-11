@@ -23,7 +23,7 @@ public abstract class MixinSoundManager {
      * @reason Cache urls?
      */
     @Overwrite
-    private static URL getURLForSoundResource(ResourceLocation p_148612_0_) {
+    public static URL getURLForSoundResource(ResourceLocation p_148612_0_) {
         return SoundCache.getURLForSoundResource(p_148612_0_);
     }
 
@@ -32,7 +32,7 @@ public abstract class MixinSoundManager {
      * @reason Handle pitch ourselves
      */
     @Overwrite
-    private float getNormalizedPitch(ISound p_148606_1_, SoundPoolEntry p_148606_2_) {
+    public float getNormalizedPitch(ISound p_148606_1_, SoundPoolEntry p_148606_2_) {
         return org.blockartistry.mod.DynSurround.client.sound.SoundManager.getNormalizedPitch(p_148606_1_, p_148606_2_);
     }
 
@@ -41,7 +41,7 @@ public abstract class MixinSoundManager {
      * @reason Handle volume ourselves
      */
     @Overwrite
-    private float getNormalizedVolume(ISound p_148594_1_, SoundPoolEntry p_148594_2_, SoundCategory p_148594_3_) {
+    public float getNormalizedVolume(ISound p_148594_1_, SoundPoolEntry p_148594_2_, SoundCategory p_148594_3_) {
         return org.blockartistry.mod.DynSurround.client.sound.SoundManager.getNormalizedVolume(p_148594_1_, p_148594_2_, p_148594_3_);
     }
 
