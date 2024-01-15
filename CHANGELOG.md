@@ -1,3 +1,8 @@
+### DynamicSurroundings-1.7.10-1.0.7.4
+**Fixes**
+* Fix MAtmos startup crash due to mixin/AT clash
+* Fix crash with non-default fog settings
+
 ### DynamicSurroundings-1.7.10-1.0.7.3
 **What's New**
 * Move all but one asm transformer to mixins

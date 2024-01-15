@@ -81,9 +81,12 @@ public class FogEffectHandler implements IClientEffectHandler {
 			final Material material = event.block.getMaterial();
 			if (material != Material.lava && material != Material.water) {
 				final Color color = this.fogColor.calculate(event);
-                event.red = color.red;
-                event.green = color.green;
-                event.blue = color.blue;
+                //noinspection ConstantValue
+                if (color != null) {
+                    event.red = color.red;
+                    event.green = color.green;
+                    event.blue = color.blue;
+                }
             }
 		}
 	}
@@ -94,8 +97,11 @@ public class FogEffectHandler implements IClientEffectHandler {
 			final Material material = event.block.getMaterial();
 			if (material != Material.lava && material != Material.water) {
 				final FogResult result = this.fogRange.calculate(event);
-                GL11.glFogf(GL11.GL_FOG_START, result.getStart());
-                GL11.glFogf(GL11.GL_FOG_END, result.getEnd());
+                //noinspection ConstantValue
+                if (result != null) {
+                    GL11.glFogf(GL11.GL_FOG_START, result.getStart());
+                    GL11.glFogf(GL11.GL_FOG_END, result.getEnd());
+                }
             }
 		}
 	}
