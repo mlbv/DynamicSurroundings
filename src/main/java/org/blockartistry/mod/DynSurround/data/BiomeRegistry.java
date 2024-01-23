@@ -201,7 +201,28 @@ public final class BiomeRegistry {
 
 			registry.clear();
 
-            Module.LOTR_PROXY.registerLOTRBiomes();
+            if (ModOptions.useLotrReflection) {
+                // Some modified versions of lotr change something about the dimension class.
+                // This uses the biome class directly. This is the only support for such versions
+                try {
+                    Class<?> lotrBiome = Class.forName("lotr.common.world.biome.LOTRBiome");
+                    Field[] declaredFields = lotrBiome.getDeclaredFields();
+                    for (Field field : declaredFields) {
+                        if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
+                            field.setAccessible(true);
+                            if (field.get(null) instanceof BiomeGenBase biome) {
+                                BiomeRegistry.registry.put(biome.biomeName, new BiomeRegistry.BiomeRegistryEntry(biome));
+                            }
+                        }
+                    }
+                }
+                catch (ClassNotFoundException| IllegalAccessException ignored) {
+                }
+            }
+            else {
+                Module.LOTR_PROXY.registerLOTRBiomes();
+            }
+
             for (BiomeGenBase biomeGenBase : BiomeGenBase.getBiomeGenArray()) {
                 if (biomeGenBase != null) {
                     registry.put(biomeGenBase.biomeName, new BiomeRegistryEntry(biomeGenBase));

@@ -64,6 +64,11 @@ public final class ModOptions {
 	@RestartRequired
 	public static boolean enableVersionChecking = true;
 
+    @Parameter(category = "Compat", property = "Use reflection to retrieve lotr mod biomes", defaultValue = "false")
+    @Comment("Some lotr versions don't have the LOTRDimension class, this option uses reflection on the LOTRBiome class instead")
+    @RestartRequired
+    public static boolean useLotrReflection = false;
+
 	public static final String CATEGORY_RAIN = "rain";
 	public static final String CONFIG_DISABLE_WEATHER_EFFECTS = "Disable Weather Effects";
 	public static final String CONFIG_RAIN_VOLUME = "Sound Level";
