@@ -201,7 +201,7 @@ public final class BiomeRegistry {
 
 			registry.clear();
 
-            if (ModOptions.useLotrReflection) {
+            if (Module.LOTR && ModOptions.useLotrReflection) {
                 // Some modified versions of lotr change something about the dimension class.
                 // This uses the biome class directly. This is the only support for such versions
                 try {
