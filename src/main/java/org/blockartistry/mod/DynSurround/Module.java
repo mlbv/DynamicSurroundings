@@ -45,9 +45,9 @@ import java.lang.reflect.InvocationTargetException;
 
 @Mod(modid = Module.MOD_ID, useMetadata = true, dependencies = Module.DEPENDENCIES, version = Module.VERSION, guiFactory = Module.GUI_FACTORY)
 public class Module {
-	public static final String MOD_ID = "@MODID@";
-	public static final String MOD_NAME = "@MODNAME@";
-	public static final String VERSION = "@VERSION@";
+	public static final String MOD_ID = "dsurround";
+	public static final String MOD_NAME = "Dynamic Surroundings";
+	public static final String VERSION = Tags.VERSION;
 	public static final String DEPENDENCIES = "required-after:Forge@[10.13.4.1614,);required-after:gtnhmixins@[2.0.0,)";
 	public static final String GUI_FACTORY = "org.blockartistry.mod.DynSurround.client.gui.ConfigGuiFactory";
 
