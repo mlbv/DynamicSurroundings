@@ -113,7 +113,7 @@ public class Module {
 	@EventHandler
 	public void postInit(final FMLPostInitializationEvent event) {
         LOTR = Loader.isModLoaded("lotr");
-        if (LOTR) {
+        if (LOTR && !ModOptions.useNoLotrProxy) {
             try {
                 LOTR_PROXY = Class.forName(LOTR_PROXY_LOCATION).asSubclass(ILOTRProxy.class).getDeclaredConstructor().newInstance();
             }

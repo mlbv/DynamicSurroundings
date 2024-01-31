@@ -69,6 +69,11 @@ public final class ModOptions {
     @RestartRequired
     public static boolean useLotrReflection = false;
 
+    @Parameter(category = "Compat", property = "Don't create lotr proxy", defaultValue = "false")
+    @Comment("don't create lotr proxy, even if lotr is present")
+    @RestartRequired
+    public static boolean useNoLotrProxy = false;
+
 	public static final String CATEGORY_RAIN = "rain";
 	public static final String CONFIG_DISABLE_WEATHER_EFFECTS = "Disable Weather Effects";
 	public static final String CONFIG_RAIN_VOLUME = "Sound Level";
