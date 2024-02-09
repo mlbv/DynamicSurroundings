@@ -4,5 +4,8 @@
   "package": "org.blockartistry.mod.DynSurround.mixins.early",
   "refmap": "mixins.dsurround.refmap.json",
   "target": "@env(DEFAULT)",
-  "compatibilityLevel": "JAVA_8"
+  "compatibilityLevel": "JAVA_8",
+  "overwrites": {
+    "conformVisibility": true
+  }
 }
