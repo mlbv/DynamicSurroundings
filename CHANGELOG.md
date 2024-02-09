@@ -1,3 +1,9 @@
+### DynamicSurroundings-1.7.10-1.0.7.5
+**Fixes**
+* Fix support for all mods that use access transformers on classes with mixins (Thanks Kaguya233qwq & Makamys)
+* Add option to not use the lotr proxy, even if the mod is present (some versions of lotr break due to a missing class)
+* Add option to use reflection to retrieve lotr biomes (Same reason as above)
+
 ### DynamicSurroundings-1.7.10-1.0.7.4
 **Fixes**
 * Fix MAtmos startup crash due to mixin/AT clash
