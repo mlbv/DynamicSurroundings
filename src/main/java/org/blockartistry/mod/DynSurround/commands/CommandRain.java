@@ -73,7 +73,7 @@ public final class CommandRain extends CommandBase {
 	}
 
 	@Override
-	public String getCommandUsage(final ICommandSender p_71518_1_) {
+	public String getCommandUsage(final ICommandSender sender) {
 		return "/rain <status | reset | reload | 1-100 | <<setmax|setmin> 0-100>";
 	}
 
