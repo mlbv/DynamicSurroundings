@@ -1,8 +1,8 @@
 dependencies {
-    api rfg.deobf('curse.maven:waila-73488:2230518')
+    api("com.github.GTNewHorizons:waila:1.8.0:dev")
     api files('libs/Calendar-1.7.10-1.0-9-deobf.jar')
     //Required for Date fallback/compatibility
-    implementation rfg.deobf('curse.maven:lotr-423748:4091561')
-    //Various tweaks including j17 & weather2 compat
-    runtimeOnlyNonPublishable deobf('https://github.com/mist475/MistLotrTweaks/releases/download/1.4.0.0/mistlotrtweaks-1.4.0.0.jar')
+    compileOnly rfg.deobf('curse.maven:lotr-423748:4091561')
+    // If you want to use both lotr and weather2 in a dev env also add this:
+    //runtimeOnlyNonPublishable deobf('https://github.com/mist475/MistLotrTweaks/releases/download/1.4.0.0/mistlotrtweaks-1.4.0.0.jar')
 }

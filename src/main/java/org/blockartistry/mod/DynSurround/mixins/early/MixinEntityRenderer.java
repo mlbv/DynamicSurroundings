@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 /*
-To fix weather2's lotr compatability I changed its subclassing behaviour of entityRenderer to mixins instead.
+To fix weather2's lotr compatibility I changed its subclassing behaviour of entityRenderer to mixins instead.
 They just put these methods behind a config, whereas we actually change them here. Which is why I upped the priority here.
  */
 @Mixin(value = EntityRenderer.class, priority = 1001)
